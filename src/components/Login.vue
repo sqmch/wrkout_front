@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import imgUrl from '../assets/wrkout.png'
 
 let username = ref('')
 let password = ref('')
@@ -15,12 +16,13 @@ let password = ref('')
             <div class="col-md-4 col-xs-12">
                 <q-card class="" flat bordered>
                     <q-card-section>
-                        <q-card-section class="q-pt-xs">
-                            <div class="text-h5 q-mt-sm q-mb-xs">Login</div>
-                            <div class="text-caption text-grey">
-                                Please enter your username and password
-                            </div>
-                        </q-card-section>
+                        <div class="" style="height: 200px">
+                            <q-img
+                                :src="imgUrl"
+                                style="height: 300px; width: 200px"
+                                color="black"
+                            />
+                        </div>
                     </q-card-section>
                     <q-card-section>
                         <q-input
