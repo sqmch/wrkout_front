@@ -1,10 +1,4 @@
-<script setup>
-import { ref } from 'vue'
-import imgUrl from '../assets/wrkout.png'
 
-let username = ref('')
-let password = ref('')
-</script>
 <template>
     <div class="">
         <div class="row"></div>
@@ -14,41 +8,71 @@ let password = ref('')
         >
             <div class="col-md-4 col-xs-0"></div>
             <div class="col-md-4 col-xs-12">
-                <q-card class="" flat bordered>
-                    <q-card-section>
-                        <div class="" style="height: 200px">
-                            <q-img
-                                :src="imgUrl"
-                                style="height: 300px; width: 200px"
-                                color="black"
-                            />
-                        </div>
-                    </q-card-section>
-                    <q-card-section>
-                        <q-input
-                            class="loginInput"
-                            filled
-                            v-model="username"
-                            label="Username"
-                        />
-                        <q-input
-                            class="loginInput"
-                            filled
-                            v-model="password"
-                            label="Password"
-                        />
-                    </q-card-section>
+                <q-card flat class="">
+                    <q-form
+                        ref="loginForm"
+                        @submit.prevent.stop="onSubmit"
+                        class="q-gutter-md q-validation-component"
+                    >
+                        <div>
+                            <div style="height: 150px">
+                                <q-img
+                                    :src="imgUrl"
+                                    style="height: 200px; width: 200px"
+                                    color="black"
+                                />
+                            </div>
+                            <div class="row justify-center">
+                                <q-input
+                                    class="loginInput"
+                                    filled
+                                    v-model="username"
+                                    label="Username"
+                                    lazy-rules
+                                    :rules="usernameRules"
+                                />
+                            </div>
+                            <div class="row justify-center">
+                                <q-input
+                                    class="loginInput"
+                                    filled
+                                    v-model="password"
+                                    label="Password"
+                                    lazy-rules
+                                    :rules="passwordRules"
+                                />
+                            </div>
 
-                    <q-card-actions class="justify-center">
-                        <q-btn class="loginButton" size="md" color="black">
+                            <div class="row justify-center">
+                                <q-btn
+                                    type="submit"
+                                    class="loginButton"
+                                    size="md"
+                                    color="grey-10"
+                                >
+                                    Login
+                                </q-btn>
+                            </div>
+                            <div class="row justify-center">
+                                <q-btn
+                                    class="loginButton"
+                                    flat
+                                    size="md"
+                                    color="grey-10"
+                                >
+                                    Create account
+                                </q-btn>
+                            </div>
+                        </div>
+                        <!--<q-btn
+                            type="submit"
+                            class="loginButton"
+                            size="md"
+                            color="black"
+                        >
                             Login
-                        </q-btn>
-                    </q-card-actions>
-                    <q-card-actions class="justify-center">
-                        <q-btn flat class="loginButton" size="md" color="black">
-                            Create account
-                        </q-btn>
-                    </q-card-actions>
+                        </q-btn>-->
+                    </q-form>
                 </q-card>
             </div>
             <div class="col-md-4 col-xs-0"></div>
@@ -56,14 +80,39 @@ let password = ref('')
         <div class="row"></div>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import imgUrl from '../assets/wrkout (7).png'
+
+let username = ref('')
+let password = ref('')
+const loginForm = ref(null)
+
+let usernameRules = ref([
+    (val) => (val !== null && val !== '') || 'Please enter an username',
+    (val) => val.length >= 3 || 'Username must contain at least 3 characters',
+])
+let passwordRules = ref([
+    (val) => !!val || 'Please enter a password',
+    (val) => val.length >= 6 || 'Password must contain at least 6 characters',
+])
+
+function onSubmit() {
+    loginForm.value.validate()
+}
+</script>
+
 <style lang="sass" scoped>
 .my-card
     width: 100%
     max-width: 350px
 .loginInput
-    margin-top: 5px
-.loginButton
-    margin: 5px
+    margin-top: 10px
     width: 95%
+.loginButton
+    width: 95%
+    margin-top: 13px
+    height: 5vh
 </style>
 
