@@ -1,3 +1,3 @@
 <template>
-    <div>home.vue</div>
+    <div>home.vue yo!</div>
 </template>

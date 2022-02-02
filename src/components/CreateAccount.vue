@@ -56,24 +56,47 @@
                                         /> </template
                                 ></q-input>
                             </div>
-
+                            <div class="row justify-center">
+                                <q-input
+                                    filled
+                                    :type="isPwd ? 'password' : 'text'"
+                                    class="loginInput"
+                                    v-model="repeatPassword"
+                                    label="Repeat password"
+                                    lazy-rules
+                                    :rules="passwordRules"
+                                    ><template
+                                        v-if="password.length > 0"
+                                        v-slot:append
+                                    >
+                                        <q-icon
+                                            :name="
+                                                isPwd
+                                                    ? 'visibility_off'
+                                                    : 'visibility'
+                                            "
+                                            class="cursor-pointer"
+                                            @click="isPwd = !isPwd"
+                                        /> </template
+                                ></q-input>
+                            </div>
                             <div class="row justify-center">
                                 <q-btn
                                     type="submit"
                                     class="loginButton"
                                     size="md"
                                     color="grey-10"
-                                    label="Login"
+                                    label="Create account"
                                 />
                             </div>
                             <div class="row justify-center">
                                 <q-btn
-                                    to="/createaccount"
+                                    to="/login"
                                     class="loginButton"
                                     flat
                                     size="md"
                                     color="grey-10"
-                                    label="Create account"
+                                    label="Login"
                                 />
                             </div>
                         </div>
@@ -90,16 +113,13 @@
 import { ref } from 'vue'
 import imgUrl from '../assets/wrkout (7).png'
 import axios from 'axios'
-import router from '../router'
-import { useAuthStore } from '../store'
 
 let username = ref('')
 let password = ref('')
-let token = ref('')
+let repeatPassword = ref('')
 let isPwd = ref(true)
 
 const loginForm = ref(null)
-const store = useAuthStore()
 
 let usernameRules = ref([
     (val) => (val !== null && val !== '') || 'Please enter an username',
@@ -108,24 +128,22 @@ let usernameRules = ref([
 let passwordRules = ref([
     (val) => !!val || 'Please enter a password',
     (val) => val.length >= 6 || 'Password must contain at least 6 characters',
+    (val) => val === password.value || 'Passwords do not match',
 ])
 
 function onSubmit() {
     loginForm.value.validate()
-    login()
+    createAccount()
 }
 
-function login() {
+function createAccount() {
     axios
-        .post('http://localhost:8000/login', {
+        .post('http://localhost:8000/register', {
             username: username.value,
             password: password.value,
         })
         .then(function (response) {
             console.log(response.data)
-            store.setToken(response.data)
-            console.log(store.token)
-            router.push('/')
         })
         .catch(function (error) {
             console.log(error)
