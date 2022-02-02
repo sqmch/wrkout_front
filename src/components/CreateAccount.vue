@@ -8,7 +8,7 @@
         >
             <div class="col-md-4 col-xs-0"></div>
             <div class="col-md-4 col-xs-12">
-                <q-card flat class="">
+                <q-card flat dark>
                     <q-form
                         ref="loginForm"
                         @submit.prevent.stop="onSubmit"
@@ -83,9 +83,9 @@
                             <div class="row justify-center">
                                 <q-btn
                                     type="submit"
-                                    class="loginButton"
+                                    class="loginButton text-black text-bold"
                                     size="md"
-                                    color="grey-10"
+                                    color="blue-4"
                                     label="Create account"
                                 />
                             </div>
@@ -95,7 +95,7 @@
                                     class="loginButton"
                                     flat
                                     size="md"
-                                    color="grey-10"
+                                    color="grey-2"
                                     label="Login"
                                 />
                             </div>
@@ -111,7 +111,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgUrl from '../assets/wrkout (7).png'
+import imgUrl from '../assets/wrkoutBlue.png'
 import axios from 'axios'
 
 let username = ref('')

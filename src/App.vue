@@ -1,10 +1,8 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-
 import { useQuasar } from 'quasar'
 
 const q = useQuasar()
+q.dark.set(true)
 </script>
 
 <template>
@@ -27,5 +25,9 @@ const q = useQuasar()
     text-align: center;
     color: #2c3e50;
     margin-top: 0px;
+}
+
+body.body--dark {
+    background: #1d1d1d;
 }
 </style>

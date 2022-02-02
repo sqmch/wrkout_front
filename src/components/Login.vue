@@ -60,9 +60,9 @@
                             <div class="row justify-center">
                                 <q-btn
                                     type="submit"
-                                    class="loginButton"
+                                    class="loginButton text-black text-bold"
                                     size="md"
-                                    color="grey-10"
+                                    color="green-4"
                                     label="Login"
                                 />
                             </div>
@@ -72,7 +72,7 @@
                                     class="loginButton"
                                     flat
                                     size="md"
-                                    color="grey-10"
+                                    color="grey-2"
                                     label="Create account"
                                 />
                             </div>
@@ -88,7 +88,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgUrl from '../assets/wrkout (7).png'
+import imgUrl from '../assets/wrkoutBlue.png'
 import axios from 'axios'
 import router from '../router'
 import { useAuthStore } from '../store'
