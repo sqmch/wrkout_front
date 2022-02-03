@@ -6,10 +6,7 @@ q.dark.set(true)
 </script>
 
 <template>
-    <!-- /src/layouts/User.vue -->
-
     <q-layout>
-        <!-- this is where the Pages are injected -->
         <q-page-container class="app"
             ><q-page> <router-view></router-view></q-page>
         </q-page-container>

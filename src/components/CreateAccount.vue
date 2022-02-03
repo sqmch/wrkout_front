@@ -113,6 +113,8 @@
 import { ref } from 'vue'
 import imgUrl from '../assets/wrkoutBlue.png'
 import axios from 'axios'
+import router from '../router'
+import { useQuasar } from 'quasar'
 
 let username = ref('')
 let password = ref('')
@@ -120,6 +122,7 @@ let repeatPassword = ref('')
 let isPwd = ref(true)
 
 const loginForm = ref(null)
+const $q = useQuasar()
 
 let usernameRules = ref([
     (val) => (val !== null && val !== '') || 'Please enter an username',
@@ -144,9 +147,25 @@ function createAccount() {
         })
         .then(function (response) {
             console.log(response.data)
+            router.push('/login')
+            $q.notify({
+                type: 'positive',
+                message: 'Account successfully created, please login.',
+            })
         })
         .catch(function (error) {
             console.log(error)
+            if (error.response.status === 400) {
+                $q.notify({
+                    type: 'negative',
+                    message: 'Username taken, please try again.',
+                })
+            } else {
+                $q.notify({
+                    type: 'negative',
+                    message: 'Account creation failed, please try again later.',
+                })
+            }
         })
 }
 </script>

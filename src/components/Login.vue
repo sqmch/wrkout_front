@@ -62,7 +62,7 @@
                                     type="submit"
                                     class="loginButton text-black text-bold"
                                     size="md"
-                                    color="green-4"
+                                    color="blue-4"
                                     label="Login"
                                 />
                             </div>
@@ -92,6 +92,7 @@ import imgUrl from '../assets/wrkoutBlue.png'
 import axios from 'axios'
 import router from '../router'
 import { useAuthStore } from '../store'
+import { useQuasar } from 'quasar'
 
 let username = ref('')
 let password = ref('')
@@ -100,6 +101,8 @@ let isPwd = ref(true)
 
 const loginForm = ref(null)
 const store = useAuthStore()
+
+const $q = useQuasar()
 
 let usernameRules = ref([
     (val) => (val !== null && val !== '') || 'Please enter an username',
@@ -129,6 +132,11 @@ function login() {
         })
         .catch(function (error) {
             console.log(error)
+            $q.notify({
+                type: 'negative',
+                message:
+                    'Login failed, please check your username or password.',
+            })
         })
 }
 </script>
