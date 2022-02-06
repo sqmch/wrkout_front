@@ -19,7 +19,6 @@
                                 <q-img
                                     :src="imgUrl"
                                     style="height: 200px; width: 200px"
-                                    color="black"
                                 />
                             </div>
                             <div class="row justify-center">
@@ -125,9 +124,9 @@ function login() {
             password: password.value,
         })
         .then(function (response) {
-            console.log(response.data)
-            store.setToken(response.data)
-            console.log(store.token)
+            store.setToken(response.data.token)
+            store.setUserId(response.data.user_id)
+            console.log('userid: ' + response.data.user_id)
             router.push('/')
         })
         .catch(function (error) {
@@ -135,16 +134,13 @@ function login() {
             $q.notify({
                 type: 'negative',
                 message:
-                    'Login failed, please check your username or password.',
+                    'Login failed, please check your username and/or password.',
             })
         })
 }
 </script>
 
 <style lang="sass" scoped>
-.my-card
-    width: 100%
-    max-width: 350px
 .loginInput
     margin-top: 10px
     width: 95%

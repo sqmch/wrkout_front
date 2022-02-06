@@ -7,11 +7,16 @@ export const useAuthStore = defineStore('auth', {
             // all these properties will have their type inferred automatically
             token: null,
             user: null,
+            user_id: null
         }
     },
     actions: {
-        setToken(payload) {
-            this.token = payload.token
+        setToken(token) {
+            this.token = token
+        },
+        setUserId(user_id) {
+            this.user_id = user_id
         }
+
     }
 })

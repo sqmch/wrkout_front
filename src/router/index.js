@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '/src/components/Home.vue'
 import Login from '/src/components/Login.vue'
 import CreateAccount from '/src/components/CreateAccount.vue'
+import Routines from '/src/components/Routines.vue'
+import Dashboard from '/src/components/Dashboard.vue'
+
 import { check } from 'prettier'
 import { useAuthStore } from '../store'
 
@@ -10,14 +13,6 @@ import { useAuthStore } from '../store'
 
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
-        meta: {
-			requiresAuth: true,
-		},
-    },
     {
         path: '/login',
         name: 'Login',
@@ -28,6 +23,33 @@ const routes = [
         name: 'CreateAccount',
         component: CreateAccount,
     },
+
+    {
+        path: '',
+        component: Home,
+        meta: {
+			requiresAuth: true,
+		},
+        children: [
+        {
+            path: '/dashboard',
+            name: 'Dashboard',
+            component: Dashboard,
+            meta: {
+			    requiresAuth: true,
+		    },
+        },
+        {
+            path: '/routines',
+            name: 'Routines',
+            component: Routines,
+            meta: {
+			    requiresAuth: true,
+		    },
+        },
+      ]
+    }
+
 ]
 const router = createRouter({
     history: createWebHistory(),

@@ -131,7 +131,7 @@ let usernameRules = ref([
 let passwordRules = ref([
     (val) => !!val || 'Please enter a password',
     (val) => val.length >= 6 || 'Password must contain at least 6 characters',
-    (val) => val === password.value || 'Passwords do not match',
+    (val) => val === password.value || "Passwords don't match",
 ])
 
 function onSubmit() {
