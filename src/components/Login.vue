@@ -127,7 +127,7 @@ function login() {
             store.setToken(response.data.token)
             store.setUserId(response.data.user_id)
             console.log('userid: ' + response.data.user_id)
-            router.push('/')
+            router.push('/routines')
         })
         .catch(function (error) {
             console.log(error)
