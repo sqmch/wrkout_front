@@ -1,7 +1,26 @@
-# Vue 3 + Vite
+# wrkout (WIP) - a web based fitness app for creating, performing and tracking workouts
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Built with
 
-## Recommended IDE Setup
+- Python (FastAPI, postgres with SQLAlchemy)
+- Vue.js (Vite, Quasar, Pinia)
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+### Demo: https://wrkout1.netlify.app/
+Frontend hosted on Netlify, backend hosted on Heroku, using Heroku Postgres.
+
+## About the project
+
+wrkout aims to be an useful workout companion app, allowing the user to create workout routines and perform them set by set, all while tracking the user's progress over time and providing useful visual overviews of the data gathered from workout routines.
+
+The project explores modern Vue 3 development using Vite and Pinia for state management. Endpoints are served by FastAPI, which plays well together with SQLAlchemy(postgres) and authentication is handled using JWT.
+
+
+## How to run locally
+
+Install frontend dependencies and run dev server:
+```
+npm install
+npm run dev
+```
+
+Note that this is the frontend repo, you can find the backend repo [here.](https://github.com/sqmch/wrkout_back)
