@@ -141,7 +141,7 @@ function onSubmit() {
 
 function createAccount() {
     axios
-        .post('http://localhost:8000/register', {
+        .post('https://wrkout1.herokuapp.com/register', {
             username: username.value,
             password: password.value,
         })
