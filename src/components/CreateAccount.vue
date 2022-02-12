@@ -141,7 +141,7 @@ function onSubmit() {
 
 function createAccount() {
     axios
-        .post('https://wrkout1.herokuapp.com/register', {
+        .post('register', {
             username: username.value,
             password: password.value,
         })
