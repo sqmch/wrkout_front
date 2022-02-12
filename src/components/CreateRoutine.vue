@@ -328,7 +328,7 @@ function closeDialog() {
 }
 function getRoutines() {
     axios
-        .get(`http://localhost:8000/users/${store.user_id}/routines`)
+        .get(`https://wrkout1.herokuapp.com/users/${store.user_id}/routines`)
         .then(function (response) {
             routines.value = response.data
         })
@@ -337,7 +337,7 @@ function getExercises() {
     console.log('getExercises - ', created_routine_id.value)
     axios
         .get(
-            `http://localhost:8000/users/${store.user_id}/routines/${created_routine_id.value}/exercises`
+            `https://wrkout1.herokuapp.com/users/${store.user_id}/routines/${created_routine_id.value}/exercises`
         )
         .then(function (response) {
             exercises.value = response.data
@@ -347,7 +347,7 @@ function getExercises() {
 
 function createRoutine() {
     axios
-        .post(`http://localhost:8000/users/${store.user_id}/routines`, {
+        .post(`https://wrkout1.herokuapp.com/users/${store.user_id}/routines`, {
             user_id: store.user_id,
             title: routine_title.value,
             description: routine_description.value,
@@ -362,7 +362,7 @@ function createRoutine() {
 function createExercise() {
     axios
         .post(
-            `http://localhost:8000/users/${store.user_id}/routines/${created_routine_id.value}/exercises`,
+            `https://wrkout1.herokuapp.com/users/${store.user_id}/routines/${created_routine_id.value}/exercises`,
             {
                 owner_id: created_routine_id.value,
                 title: exercise_title.value,
@@ -378,7 +378,7 @@ function createExercise() {
 function editExercise(exercise) {
     axios
         .put(
-            `http://localhost:8000/users/${store.user_id}/routines/${exercise.owner_id}/exercises/${exercise.id}`,
+            `https://wrkout1.herokuapp.com/users/${store.user_id}/routines/${exercise.owner_id}/exercises/${exercise.id}`,
             {
                 owner_id: exercise.owner_id,
                 title: exercise.title,
@@ -401,7 +401,7 @@ function deleteExercise(exercise) {
     console.log('before deleteExercise - ', editedItem.value)
     axios
         .delete(
-            `http://localhost:8000/users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`
+            `https://wrkout1.herokuapp.com/users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`
         )
         .then(function (response) {
             getExercises()

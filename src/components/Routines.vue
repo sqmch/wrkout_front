@@ -255,7 +255,7 @@ let drag = ref(false)
 
 function getRoutines() {
     axios
-        .get(`http://localhost:8000/users/${store.user_id}/routines`)
+        .get(`https://wrkout1.herokuapp.com/users/${store.user_id}/routines`)
         .then(function (response) {
             routines.value = response.data
             console.log(response.data)
@@ -267,7 +267,7 @@ function createRoutineDialog() {
 }
 function createRoutine() {
     axios
-        .post(`http://localhost:8000/users/${store.user_id}/routines`, {
+        .post(`https://wrkout1.herokuapp.com/users/${store.user_id}/routines`, {
             user_id: store.user_id,
             title: routine_title.value,
             description: routine_description.value,
@@ -290,7 +290,7 @@ function confirmDeleteRoutine(routine) {
 function deleteRoutine() {
     axios
         .delete(
-            `http://localhost:8000/users/${store.user_id}/routines/${editedItem.value.id}`
+            `https://wrkout1.herokuapp.com/users/${store.user_id}/routines/${editedItem.value.id}`
         )
         .then(function (response) {
             getRoutines()
