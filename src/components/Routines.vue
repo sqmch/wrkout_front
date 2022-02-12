@@ -167,64 +167,49 @@
             </q-item-section>
         </q-list>-->
         <div>
-            <draggable
-                v-model="routines"
-                tag="transition-group"
-                @start="drag = true"
-                @end="drag = false"
-                item-key="title"
+            <q-expansion-item
+                v-for="element in routines"
+                v-bind:key="element"
+                switch-toggle-side
+                icon=""
+                :label="element.title"
             >
-                <template #item="{ element }">
-                    <q-expansion-item
-                        switch-toggle-side
-                        icon=""
-                        :label="element.title"
-                    >
-                        <q-card class="bg-grey-10">
-                            <q-card-section
-                                v-show="element.description.length > 0"
-                            >
-                                <div class="row">
-                                    <div class="row">
-                                        {{ element.description }}
-                                    </div>
-                                </div>
-                            </q-card-section>
-
-                            <div class="row" style="">
-                                <div class="col">
-                                    <q-btn
-                                        @click="confirmDeleteRoutine(element)"
-                                        class="fit"
-                                        flat
-                                        color=""
-                                        icon="delete"
-                                    ></q-btn>
-                                </div>
-                                <div class="col">
-                                    <q-btn
-                                        @click="editRoutine"
-                                        class="fit"
-                                        flat
-                                        icon="edit"
-                                    ></q-btn>
-                                </div>
-
-                                <div class="col">
-                                    <q-btn
-                                        class="fit"
-                                        flat
-                                        color="blue-4"
-                                        size="lg"
-                                    >
-                                        <q-icon name="play_arrow"></q-icon>
-                                    </q-btn>
-                                </div>
+                <q-card class="bg-grey-10">
+                    <q-card-section v-show="element.description.length > 0">
+                        <div class="row">
+                            <div class="row">
+                                {{ element.description }}
                             </div>
-                        </q-card>
-                    </q-expansion-item>
-                </template>
-            </draggable>
+                        </div>
+                    </q-card-section>
+
+                    <div class="row" style="">
+                        <div class="col">
+                            <q-btn
+                                @click="confirmDeleteRoutine(element)"
+                                class="fit"
+                                flat
+                                color=""
+                                icon="delete"
+                            ></q-btn>
+                        </div>
+                        <div class="col">
+                            <q-btn
+                                @click="editRoutine"
+                                class="fit"
+                                flat
+                                icon="edit"
+                            ></q-btn>
+                        </div>
+
+                        <div class="col">
+                            <q-btn class="fit" flat color="blue-4" size="lg">
+                                <q-icon name="play_arrow"></q-icon>
+                            </q-btn>
+                        </div>
+                    </div>
+                </q-card>
+            </q-expansion-item>
         </div>
     </div>
 </template>

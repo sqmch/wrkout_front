@@ -8,11 +8,15 @@
                 >
                     Exercise details
                 </div>
-                <q-form @submit="onExerciseEditSubmit" class="q-gutter-md">
+                <q-form
+                    ref="editExerciseForm"
+                    @submit="onExerciseEditSubmit(exercise)"
+                    class="q-gutter-md"
+                >
                     <q-input
                         class="createRoutineInput"
                         filled
-                        v-model="editedItem.title"
+                        v-model="edit_exercise_title"
                         label="Routine name"
                         hint="Name of your workout routine"
                         lazy-rules
@@ -25,7 +29,7 @@
                     <q-input
                         class="createRoutineInput"
                         filled
-                        v-model="editedItem.description"
+                        v-model="edit_exercise_description"
                         label="Routine description (optional)"
                         hint="Description of your workout routine"
                     />
@@ -35,7 +39,7 @@
                         filled
                         color="grey-2"
                         type="number"
-                        v-model="editedItem.rest_time"
+                        v-model="edit_exercise_rest_time"
                         label="Rest time"
                         hint="Rest time between exercises in seconds"
                         lazy-rules
@@ -45,13 +49,6 @@
                                 'Please enter a rest time',
                         ]"
                     />
-
-                    <div
-                        class="row text-h6"
-                        style="margin-bottom: 40px; margin-top: 10px"
-                    >
-                        Exercises
-                    </div>
 
                     <div class="row">
                         <q-btn
@@ -227,11 +224,18 @@
                             <q-card class="bg-grey-10">
                                 <q-card-section>
                                     <div class="row">
-                                        <div class="row">
-                                            {{ exercise.description }}
-                                        </div>
-                                        <div class="row">
+                                        <div class="col">
                                             Rest time: {{ exercise.rest_time }}s
+                                            <div
+                                                v-show="
+                                                    exercise.description
+                                                        .length > 0
+                                                "
+                                                class="col"
+                                            >
+                                                Description:
+                                                {{ exercise.description }}
+                                            </div>
                                         </div>
                                     </div>
                                 </q-card-section>
@@ -250,7 +254,9 @@
                                     </div>
                                     <div class="col">
                                         <q-btn
-                                            @click="editExercise(exercise)"
+                                            @click="
+                                                editExerciseDialog(exercise)
+                                            "
                                             class="fit"
                                             flat
                                             icon="edit"
@@ -309,13 +315,18 @@ let exercise_title = ref('')
 let exercise_description = ref('')
 let exercise_rest_time = ref(90)
 
-let createDialog = ref(false)
+let edit_exercise_title = ref('')
+let edit_exercise_description = ref('')
+let edit_exercise_rest_time = ref(90)
+
+let editDialog = ref(false)
 let confirmDelete = ref(false)
 let editedItem = ref(null)
 let step = ref(1)
 let createForm = ref(null)
 let createExerciseForm = ref(null)
 let created_routine_id = ref(null)
+let editExerciseForm = ref(null)
 
 let splitterModel = ref(50)
 
@@ -324,7 +335,7 @@ function goBack() {
 }
 
 function closeDialog() {
-    createDialog.value = false
+    editDialog.value = false
 }
 function getRoutines() {
     axios.get(`users/${store.user_id}/routines`).then(function (response) {
@@ -365,30 +376,44 @@ function createExercise() {
                 owner_id: created_routine_id.value,
                 title: exercise_title.value,
                 description: exercise_description.value,
+                rest_time: exercise_rest_time.value,
             }
         )
         .then(function (response) {
             getExercises()
             exercise_title.value = ''
             exercise_description.value = ''
+            exercise_rest_time.value = 90
         })
+}
+function editExerciseDialog(exercise) {
+    editDialog.value = true
+    editedItem.value = exercise
+    edit_exercise_title.value = exercise.title
+    edit_exercise_description.value = exercise.description
+    edit_exercise_rest_time.value = exercise.rest_time
 }
 function editExercise(exercise) {
     axios
         .put(
-            `users/${store.user_id}/routines/${exercise.owner_id}/exercises/${exercise.id}`,
+            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`,
             {
-                owner_id: exercise.owner_id,
-                title: exercise.title,
-                description: exercise.description,
-                rest_time: exercise.rest_time,
+                title: edit_exercise_title.value,
+                description: edit_exercise_description.value,
+                rest_time: edit_exercise_rest_time.value,
             }
         )
         .then(function (response) {
             getExercises()
-            exercise_title.value = ''
-            exercise_description.value = ''
+            editDialog.value = false
+            edit_exercise_title.value = ''
+            edit_exercise_description.value = ''
+            edit_exercise_rest_time.value = 90
         })
+}
+function onExerciseEditSubmit(exercise) {
+    editExerciseForm.value.validate()
+    editExercise(exercise)
 }
 
 function confirmDeleteExercise(exercise) {
@@ -413,11 +438,6 @@ function onSubmit() {
 function onExerciseSubmit() {
     createExerciseForm.value.validate()
     createExercise()
-}
-
-function onExerciseEditSubmit() {
-    createExerciseForm.value.validate()
-    editExercise()
 }
 
 function onReset() {
