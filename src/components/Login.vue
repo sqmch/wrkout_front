@@ -119,7 +119,7 @@ function onSubmit() {
 
 function login() {
     axios
-        .post('https://wrkout1.herokuapp.com/login', {
+        .post('login', {
             username: username.value,
             password: password.value,
         })

@@ -1,6 +1,8 @@
 <script setup>
 import { useQuasar } from 'quasar'
+import Axios from 'axios'
 
+Axios.defaults.baseURL = import.meta.env.VITE_API_URL
 const q = useQuasar()
 q.dark.set(true)
 </script>
