@@ -4,6 +4,8 @@ import Login from '/src/components/Login.vue'
 import CreateAccount from '/src/components/CreateAccount.vue'
 import Routines from '/src/components/Routines.vue'
 import Dashboard from '/src/components/Dashboard.vue'
+import CreateRoutine from '/src/components/CreateRoutine.vue'
+
 
 import { check } from 'prettier'
 import { useAuthStore } from '../store'
@@ -47,6 +49,14 @@ const routes = [
 			    requiresAuth: true,
 		    },
         },
+        {
+            path: '/createroutine',
+            name: 'CreateRoutine',
+            component: CreateRoutine,
+            meta: {
+			    requiresAuth: true,
+		    },
+        }
       ]
     }
 

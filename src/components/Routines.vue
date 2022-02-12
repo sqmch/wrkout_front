@@ -2,6 +2,12 @@
     <q-dialog v-model="createDialog">
         <q-card class="my-card" style="width: 100vw">
             <q-card-section>
+                <div
+                    class="row text-h6"
+                    style="margin-bottom: 40px; margin-top: 10px"
+                >
+                    Routine details
+                </div>
                 <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
                     <q-input
                         class="createRoutineInput"
@@ -32,7 +38,7 @@
                         type="number"
                         v-model="rest_time"
                         label="Rest time"
-                        hint="The rest time in seconds"
+                        hint="Rest time between exercises in seconds"
                         lazy-rules
                         :rules="[
                             (val) =>
@@ -40,6 +46,13 @@
                                 'Please enter a rest time',
                         ]"
                     />
+
+                    <div
+                        class="row text-h6"
+                        style="margin-bottom: 40px; margin-top: 10px"
+                    >
+                        Exercises
+                    </div>
 
                     <div class="row">
                         <q-btn
@@ -75,8 +88,7 @@
                 />
 
                 <span class="q-ml-sm"
-                    >Are you sure you want to delete this workout
-                    routine?.</span
+                    >Are you sure you want to delete this workout routine?</span
                 >
             </q-card-section>
 
@@ -92,21 +104,20 @@
         </q-card>
     </q-dialog>
     <div class="">
-        <div class="row text-subtitle2 items-center">
+        <div class="row text-subtitle1 items-center">
             Workout routines
             <q-space></q-space>
-            <q-btn
-                @click="createRoutineDialog"
-                round
-                flat
-                color="blue-4"
-                size="md"
-                label=""
-                icon="add"
-                class="text-black"
-            />
         </div>
         <q-separator style="margin-bottom: 15px"></q-separator>
+        <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-btn
+                fab
+                to="/createroutine"
+                icon="add"
+                color="blue-4"
+                class="text-black"
+            /> </q-page-sticky
+        ><!--
         <q-list v-for="routine in routines" v-bind:key="routine">
             <q-item-section>
                 <q-expansion-item
@@ -142,7 +153,6 @@
 
                             <div class="col">
                                 <q-btn
-                                    @click=""
                                     class="fit"
                                     flat
                                     color="blue-4"
@@ -155,10 +165,78 @@
                     </q-card>
                 </q-expansion-item>
             </q-item-section>
-        </q-list>
+        </q-list>-->
+        <div>
+            <draggable
+                v-model="routines"
+                tag="transition-group"
+                @start="drag = true"
+                @end="drag = false"
+                item-key="title"
+            >
+                <template #item="{ element }">
+                    <q-expansion-item
+                        switch-toggle-side
+                        icon=""
+                        :label="element.title"
+                    >
+                        <q-card class="bg-grey-10">
+                            <q-card-section
+                                v-show="element.description.length > 0"
+                            >
+                                <div class="row">
+                                    <div class="row">
+                                        {{ element.description }}
+                                    </div>
+                                </div>
+                            </q-card-section>
+
+                            <div class="row" style="">
+                                <div class="col">
+                                    <q-btn
+                                        @click="confirmDeleteRoutine(element)"
+                                        class="fit"
+                                        flat
+                                        color=""
+                                        icon="delete"
+                                    ></q-btn>
+                                </div>
+                                <div class="col">
+                                    <q-btn
+                                        @click="editRoutine"
+                                        class="fit"
+                                        flat
+                                        icon="edit"
+                                    ></q-btn>
+                                </div>
+
+                                <div class="col">
+                                    <q-btn
+                                        class="fit"
+                                        flat
+                                        color="blue-4"
+                                        size="lg"
+                                    >
+                                        <q-icon name="play_arrow"></q-icon>
+                                    </q-btn>
+                                </div>
+                            </div>
+                        </q-card>
+                    </q-expansion-item>
+                </template>
+            </draggable>
+        </div>
     </div>
 </template>
+<script>
+import draggable from 'vuedraggable'
 
+export default {
+    components: {
+        draggable,
+    },
+}
+</script>
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
@@ -173,6 +251,7 @@ let routine_description = ref('')
 let createDialog = ref(false)
 let confirmDelete = ref(false)
 let editedItem = ref(null)
+let drag = ref(false)
 
 function getRoutines() {
     axios

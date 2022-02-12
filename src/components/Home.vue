@@ -1,6 +1,6 @@
 <template>
     <q-layout
-        view="lHh lpr lFf"
+        view="hHh Lpr lff"
         container
         style="height: 100vh"
         class="rounded-borders"
@@ -15,9 +15,16 @@
                     icon="menu"
                     class="q-mr-sm"
                 />
-                <div class="titleText">wrkout</div>
 
-                <q-toolbar-title></q-toolbar-title>
+                <div class="titleText text-subtitle-2 text-blue-4">wrkout</div>
+                <q-space></q-space>
+                <q-btn
+                    size="sm"
+                    round
+                    flat
+                    icon="logout"
+                    @click="logout"
+                ></q-btn>
             </q-toolbar>
         </q-header>
 
@@ -55,6 +62,13 @@
 
                         <q-item-section> Stats </q-item-section>
                     </q-item>
+                    <q-item clickable v-ripple>
+                        <q-item-section avatar>
+                            <q-icon name="analytics" />
+                        </q-item-section>
+
+                        <q-item-section> Stats </q-item-section>
+                    </q-item>
                 </q-list>
             </q-scroll-area>
         </q-drawer>
@@ -70,17 +84,25 @@
 <script setup>
 import { ref } from 'vue'
 import imgUrl from '../assets/wrkoutBlueCropped.png'
+import { useAuthStore } from '../store'
+import router from '../router'
+
+const store = useAuthStore()
 
 let drawer = ref(false)
 let miniState = ref(false)
+
+function logout() {
+    store.token = null
+    router.push('/login')
+}
 </script>
 
 <style lang="sass" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap')
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;300&family=Montserrat:wght@300&display=swap')
 .toolBar
     background-color: #1d1d1d
 
 .titleText
-    font-family: 'Montserrat',
+    font-family: 'Montserrat Alternates', sans-serif
 </style>
