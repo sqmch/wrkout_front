@@ -335,16 +335,14 @@ function closeDialog() {
     createDialog.value = false
 }
 function getRoutines() {
-    axios
-        .get(`http://localhost:8000/users/${store.user_id}/routines`)
-        .then(function (response) {
-            routines.value = response.data
-        })
+    axios.get(`users/${store.user_id}/routines`).then(function (response) {
+        routines.value = response.data
+    })
 }
 function getExercises() {
     axios
         .get(
-            `http://localhost:8000/users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`
         )
         .then(function (response) {
             exercises.value = response.data
@@ -354,14 +352,11 @@ function getExercises() {
 
 function editRoutine() {
     axios
-        .put(
-            `http://localhost:8000/users/${store.user_id}/routines/${parsedRoutine.value.id}`,
-            {
-                user_id: store.user_id,
-                title: routine_title.value,
-                description: routine_description.value,
-            }
-        )
+        .put(`users/${store.user_id}/routines/${parsedRoutine.value.id}`, {
+            user_id: store.user_id,
+            title: routine_title.value,
+            description: routine_description.value,
+        })
         .then(function (response) {
             getRoutines()
             getExercises()
@@ -372,7 +367,7 @@ function editRoutine() {
 function createExercise() {
     axios
         .post(
-            `http://localhost:8000/users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`,
             {
                 owner_id: created_routine_id.value,
                 title: exercise_title.value,
