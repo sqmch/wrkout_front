@@ -119,6 +119,27 @@
             />
         </q-page-sticky>
         <div class="routineList">
+            <q-card
+                flat
+                v-show="routines.length === 0"
+                class="emptyRoutineList"
+                style="
+                    background: radial-gradient(
+                        circle,
+                        #35a2ff 0%,
+                        #014a88 100%
+                    );
+                "
+            >
+                <q-card-section
+                    ><q-icon size="lg" name="archive_plus_outline"></q-icon
+                ></q-card-section>
+                <q-card-section
+                    ><div class="text-h6">
+                        No routines found, add your first routine!
+                    </div></q-card-section
+                >
+            </q-card>
             <q-expansion-item
                 v-for="routine in routines"
                 v-bind:key="routine"
@@ -175,7 +196,7 @@ import router from '../router'
 const store = useAuthStore()
 const generalStore = useGeneralStore()
 
-let routines = ref(null)
+let routines = ref([])
 let rest_time = ref(90)
 let routine_title = ref('')
 let routine_description = ref('')
@@ -258,7 +279,6 @@ getRoutines()
 <style lang="sass">
 .createRoutineInput
     margin-bottom: 25px
-
-.routineList
-    max-height: 100px
+.emptyRoutineList
+    margin-top: 10vh
 </style>
