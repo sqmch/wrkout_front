@@ -5,6 +5,10 @@ import CreateAccount from '/src/components/CreateAccount.vue'
 import Routines from '/src/components/Routines.vue'
 import Dashboard from '/src/components/Dashboard.vue'
 import CreateRoutine from '/src/components/CreateRoutine.vue'
+import Stats from '/src/components/Stats.vue'
+import EditRoutine from '/src/components/EditRoutine.vue'
+
+
 
 
 import { check } from 'prettier'
@@ -55,7 +59,25 @@ const routes = [
             component: CreateRoutine,
             meta: {
 			    requiresAuth: true,
+            },
+
+        },
+         {
+            path: '/stats',
+            name: 'Stats',
+            component: Stats,
+            meta: {
+			    requiresAuth: true,
 		    },
+            },
+         {
+            path: '/editroutine',
+            name: 'EditRoutine',
+            component: EditRoutine,
+            meta: {
+			    requiresAuth: true,
+             },
+            props: true
         }
       ]
     }

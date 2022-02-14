@@ -72,6 +72,26 @@
             </q-card-section>
         </q-card>
     </q-dialog>
+    <q-dialog v-model="confirmDelete" persistent>
+        <q-card>
+            <q-card-section class="row items-center justify-center">
+                <q-avatar icon="warning" color="gray-9" size="xl" />
+            </q-card-section>
+            <q-card-section
+                >Are you sure you want to delete this exercise?</q-card-section
+            >
+
+            <q-card-actions align="right">
+                <q-btn flat label="Cancel" color="" v-close-popup />
+                <q-btn
+                    @click="deleteExercise"
+                    label="Delete"
+                    color="red"
+                    v-close-popup
+                />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
     <div>
         <div class="row">
             <q-toolbar>
@@ -79,6 +99,7 @@
                 <q-toolbar-title>Create workout routine</q-toolbar-title>
             </q-toolbar>
         </div>
+        <q-separator style="margin-bottom: 15px"></q-separator>
 
         <!--  "header-nav" into stepper for clickable steps-->
         <q-stepper
@@ -269,32 +290,6 @@
                 </q-list>
             </q-step>
         </q-stepper>
-        <q-dialog v-model="confirmDelete" persistent>
-            <q-card>
-                <q-card-section class="row items-center justify-center">
-                    <q-avatar
-                        icon="warning"
-                        color="gray-9"
-                        size="xl"
-                        style="margin-bottom: 20px"
-                    />
-
-                    <span class="q-ml-sm"
-                        >Are you sure you want to delete this exercise?</span
-                    >
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="" v-close-popup />
-                    <q-btn
-                        @click="deleteExercise"
-                        label="Delete"
-                        color="red"
-                        v-close-popup
-                    />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
     </div>
 </template>
 

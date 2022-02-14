@@ -15,16 +15,14 @@
                     icon="menu"
                     class="q-mr-sm"
                 />
+                <q-separator dark vertical inset />
+                <!--<div class="titleText text-subtitle-2 text-blue-4">wrkout</div>-->
+                <q-toolbar-title class="text-subtitle1"
+                    >Workout routines</q-toolbar-title
+                >
+                <q-separator dark vertical inset />
 
-                <div class="titleText text-subtitle-2 text-blue-4">wrkout</div>
-                <q-space></q-space>
-                <q-btn
-                    size="sm"
-                    round
-                    flat
-                    icon="logout"
-                    @click="logout"
-                ></q-btn>
+                <q-btn round flat icon="logout" @click="logout"></q-btn>
             </q-toolbar>
         </q-header>
 
@@ -55,7 +53,7 @@
                         <q-item-section> Routines </q-item-section>
                     </q-item>
 
-                    <q-item clickable v-ripple>
+                    <q-item clickable v-ripple to="/stats">
                         <q-item-section avatar>
                             <q-icon name="analytics" />
                         </q-item-section>

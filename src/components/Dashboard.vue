@@ -1,3 +1,3 @@
 <template>
-    <div>dashboard.vue</div>
+    <div>dashboard.vue - WIP</div>
 </template>

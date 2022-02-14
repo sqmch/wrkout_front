@@ -80,17 +80,12 @@
     <q-dialog v-model="confirmDelete" persistent>
         <q-card>
             <q-card-section class="row items-center justify-center">
-                <q-avatar
-                    icon="warning"
-                    color="gray-9"
-                    size="xl"
-                    style="margin-bottom: 20px"
-                />
-
-                <span class="q-ml-sm"
-                    >Are you sure you want to delete this workout routine?</span
-                >
+                <q-avatar icon="warning" color="gray-9" size="xl" />
             </q-card-section>
+            <q-card-section
+                >Are you sure you want to delete this workout
+                routine?</q-card-section
+            >
 
             <q-card-actions align="right">
                 <q-btn flat label="Cancel" color="" v-close-popup />
@@ -104,11 +99,20 @@
         </q-card>
     </q-dialog>
     <div class="">
-        <div class="row text-subtitle1 items-center">
-            Workout routines
-            <q-space></q-space>
+        <div class="row">
+            <q-toolbar>
+                <q-btn flat round icon="arrow_back" @click="goBack"></q-btn
+                ><q-space></q-space>
+                <q-btn
+                    class="text-black"
+                    to="/createroutine"
+                    color="blue-4"
+                    icon="add"
+                    label="create"
+                ></q-btn>
+            </q-toolbar>
         </div>
-        <q-separator style="margin-bottom: 15px"></q-separator>
+        <q-separator dark></q-separator>
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn
                 fab
@@ -116,69 +120,21 @@
                 icon="add"
                 color="blue-4"
                 class="text-black"
-            /> </q-page-sticky
-        ><!--
-        <q-list v-for="routine in routines" v-bind:key="routine">
-            <q-item-section>
-                <q-expansion-item
-                    switch-toggle-side
-                    icon=""
-                    :label="routine.title"
-                >
-                    <q-card class="bg-grey-10">
-                        <q-card-section v-show="routine.description.length > 0">
-                            <div class="row">
-                                <div class="row">{{ routine.description }}</div>
-                            </div>
-                        </q-card-section>
-
-                        <div class="row" style="">
-                            <div class="col">
-                                <q-btn
-                                    @click="confirmDeleteRoutine(routine)"
-                                    class="fit"
-                                    flat
-                                    color=""
-                                    icon="delete"
-                                ></q-btn>
-                            </div>
-                            <div class="col">
-                                <q-btn
-                                    @click="editRoutine"
-                                    class="fit"
-                                    flat
-                                    icon="edit"
-                                ></q-btn>
-                            </div>
-
-                            <div class="col">
-                                <q-btn
-                                    class="fit"
-                                    flat
-                                    color="blue-4"
-                                    size="lg"
-                                >
-                                    <q-icon name="play_arrow"></q-icon>
-                                </q-btn>
-                            </div>
-                        </div>
-                    </q-card>
-                </q-expansion-item>
-            </q-item-section>
-        </q-list>-->
+            />
+        </q-page-sticky>
         <div>
             <q-expansion-item
-                v-for="element in routines"
-                v-bind:key="element"
+                v-for="routine in routines"
+                v-bind:key="routine"
                 switch-toggle-side
                 icon=""
-                :label="element.title"
+                :label="routine.title"
             >
                 <q-card class="bg-grey-10">
-                    <q-card-section v-show="element.description.length > 0">
+                    <q-card-section v-show="routine.description.length > 0">
                         <div class="row">
                             <div class="row">
-                                {{ element.description }}
+                                {{ routine.description }}
                             </div>
                         </div>
                     </q-card-section>
@@ -186,7 +142,7 @@
                     <div class="row" style="">
                         <div class="col">
                             <q-btn
-                                @click="confirmDeleteRoutine(element)"
+                                @click="confirmDeleteRoutine(routine)"
                                 class="fit"
                                 flat
                                 color=""
@@ -195,7 +151,7 @@
                         </div>
                         <div class="col">
                             <q-btn
-                                @click="editRoutine"
+                                @click="editRoutine(routine)"
                                 class="fit"
                                 flat
                                 icon="edit"
@@ -213,19 +169,12 @@
         </div>
     </div>
 </template>
-<script>
-import draggable from 'vuedraggable'
 
-export default {
-    components: {
-        draggable,
-    },
-}
-</script>
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '../store'
+import router from '../router'
 
 const store = useAuthStore()
 
@@ -278,7 +227,12 @@ function deleteRoutine() {
         })
 }
 
-function editRoutine() {}
+function editRoutine(routine) {
+    router.push({
+        name: 'EditRoutine',
+        params: { routine: JSON.stringify(routine) },
+    })
+}
 
 function closeDialog() {
     createDialog.value = false
