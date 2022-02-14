@@ -267,7 +267,9 @@
                                     </div>
                                     <div class="col">
                                         <q-btn
-                                            @click="editExercise"
+                                            @click="
+                                                editExerciseDialog(exercise)
+                                            "
                                             class="fit"
                                             flat
                                             icon="edit"
@@ -306,6 +308,12 @@ let exercise_title = ref('')
 let exercise_description = ref('')
 let exercise_rest_time = ref(90)
 
+let edit_exercise_title = ref('')
+let edit_exercise_description = ref('')
+let edit_exercise_rest_time = ref(90)
+
+let editDialog = ref(false)
+
 let createDialog = ref(false)
 let confirmDelete = ref(false)
 let editedItem = ref(null)
@@ -313,6 +321,7 @@ let step = ref(1)
 let createForm = ref(null)
 let createExerciseForm = ref(null)
 let created_routine_id = ref(null)
+let editExerciseForm = ref(null)
 
 let splitterModel = ref(50)
 
@@ -377,6 +386,8 @@ function createExercise() {
         })
 }
 function editExerciseDialog(exercise) {
+    console.log('exercise in editExerciseDialog: ', exercise)
+
     editDialog.value = true
     editedItem.value = exercise
     edit_exercise_title.value = exercise.title
@@ -384,9 +395,10 @@ function editExerciseDialog(exercise) {
     edit_exercise_rest_time.value = exercise.rest_time
 }
 function editExercise(exercise) {
+    console.log('exercise in editExercise: ', exercise)
     axios
         .put(
-            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`,
             {
                 title: edit_exercise_title.value,
                 description: edit_exercise_description.value,
@@ -414,7 +426,7 @@ function deleteExercise(exercise) {
     console.log('before deleteExercise - ', editedItem.value)
     axios
         .delete(
-            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`
         )
         .then(function (response) {
             getExercises()
