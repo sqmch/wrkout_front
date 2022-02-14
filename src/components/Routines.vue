@@ -123,19 +123,9 @@
                 flat
                 v-show="routines.length === 0"
                 class="emptyRoutineList"
-                style="
-                    background: radial-gradient(
-                        circle,
-                        #35a2ff 0%,
-                        #014a88 100%
-                    );
-                "
             >
                 <q-card-section
-                    ><q-icon size="lg" name="archive_plus_outline"></q-icon
-                ></q-card-section>
-                <q-card-section
-                    ><div class="text-h6">
+                    ><div class="text-subtitle2">
                         No routines found, add your first routine!
                     </div></q-card-section
                 >
@@ -280,5 +270,5 @@ getRoutines()
 .createRoutineInput
     margin-bottom: 25px
 .emptyRoutineList
-    margin-top: 10vh
+    margin-top: 5vh
 </style>
