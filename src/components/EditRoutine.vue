@@ -292,7 +292,6 @@ const props = defineProps({
     routine: String,
 })
 let parsedRoutine = ref(JSON.parse(props.routine))
-console.log('hmm ', parsedRoutine._value)
 let routines = ref(null)
 let exercises = ref([])
 
@@ -322,7 +321,6 @@ let splitterModel = ref(50)
 
 getExercises()
 setTitle()
-console.log(generalStore.toolbarTitle)
 
 function setTitle() {
     generalStore.setToolbarTitle('Edit routine')
@@ -347,7 +345,6 @@ function getExercises() {
         )
         .then(function (response) {
             exercises.value = response.data
-            //console.log('... ', exercises.value)
         })
 }
 
@@ -382,8 +379,6 @@ function createExercise() {
         })
 }
 function editExerciseDialog(exercise) {
-    console.log('exercise in editExerciseDialog: ', exercise)
-
     editDialog.value = true
     editedItem.value = exercise
     edit_exercise_title.value = exercise.title
@@ -391,7 +386,6 @@ function editExerciseDialog(exercise) {
     edit_exercise_rest_time.value = exercise.rest_time
 }
 function editExercise(exercise) {
-    console.log('exercise in editExercise: ', exercise)
     axios
         .put(
             `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`,
@@ -419,7 +413,6 @@ function confirmDeleteExercise(exercise) {
     editedItem.value = exercise
 }
 function deleteExercise(exercise) {
-    console.log('before deleteExercise - ', editedItem.value)
     axios
         .delete(
             `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`

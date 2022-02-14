@@ -152,7 +152,6 @@ function createAccount() {
         .then(function (response) {
             loading.value = false
 
-            console.log(response.data)
             router.push('/login')
             $q.notify({
                 type: 'positive',

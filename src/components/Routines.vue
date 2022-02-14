@@ -196,7 +196,6 @@ let editedItem = ref(null)
 let drag = ref(false)
 
 setTitle()
-console.log(generalStore.toolbarTitle)
 
 function setTitle() {
     generalStore.setToolbarTitle('Routines')
@@ -209,7 +208,6 @@ function getRoutines() {
     })
 }
 function createRoutineDialog() {
-    console.log('createRoutineDialog ran')
     createDialog.value = true
 }
 function createRoutine() {
@@ -255,7 +253,6 @@ function closeDialog() {
 
 function onSubmit() {
     createRoutine()
-    console.log('onSubmit ran')
 }
 
 function onReset() {

@@ -320,7 +320,6 @@ let editExerciseForm = ref(null)
 let splitterModel = ref(50)
 
 setTitle()
-console.log(generalStore.toolbarTitle)
 
 function setTitle() {
     generalStore.setToolbarTitle('Create routine')
@@ -339,14 +338,12 @@ function getRoutines() {
     })
 }
 function getExercises() {
-    console.log('getExercises - ', created_routine_id.value)
     axios
         .get(
             `users/${store.user_id}/routines/${created_routine_id.value}/exercises`
         )
         .then(function (response) {
             exercises.value = response.data
-            console.log('... ', exercises.value)
         })
 }
 
@@ -417,7 +414,6 @@ function confirmDeleteExercise(exercise) {
     editedItem.value = exercise
 }
 function deleteExercise(exercise) {
-    console.log('before deleteExercise - ', editedItem.value)
     axios
         .delete(
             `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`
