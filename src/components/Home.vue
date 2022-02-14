@@ -17,9 +17,7 @@
                 />
                 <q-separator dark vertical inset />
                 <!--<div class="titleText text-subtitle-2 text-blue-4">wrkout</div>-->
-                <q-toolbar-title class="text-subtitle1"
-                    >Workout routines</q-toolbar-title
-                >
+                <q-toolbar-title class="text-subtitle1"></q-toolbar-title>
                 <q-separator dark vertical inset />
 
                 <q-btn round flat icon="logout" @click="logout"></q-btn>
