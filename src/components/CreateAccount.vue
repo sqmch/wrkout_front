@@ -82,6 +82,7 @@
                             </div>
                             <div class="row justify-center">
                                 <q-btn
+                                    :loading="loading"
                                     type="submit"
                                     class="loginButton text-black text-bold"
                                     size="md"
@@ -120,6 +121,7 @@ let username = ref('')
 let password = ref('')
 let repeatPassword = ref('')
 let isPwd = ref(true)
+let loading = ref(false)
 
 const loginForm = ref(null)
 const $q = useQuasar()
@@ -140,12 +142,16 @@ function onSubmit() {
 }
 
 function createAccount() {
+    loading.value = true
+
     axios
         .post('register', {
             username: username.value,
             password: password.value,
         })
         .then(function (response) {
+            loading.value = false
+
             console.log(response.data)
             router.push('/login')
             $q.notify({

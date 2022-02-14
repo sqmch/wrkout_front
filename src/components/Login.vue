@@ -58,6 +58,7 @@
 
                             <div class="row justify-center">
                                 <q-btn
+                                    :loading="loading"
                                     type="submit"
                                     class="loginButton text-black text-bold"
                                     size="md"
@@ -111,6 +112,7 @@ let passwordRules = ref([
     (val) => !!val || 'Please enter a password',
     (val) => val.length >= 6 || 'Password must contain at least 6 characters',
 ])
+let loading = ref(false)
 
 function onSubmit() {
     loginForm.value.validate()
@@ -118,12 +120,14 @@ function onSubmit() {
 }
 
 function login() {
+    loading.value = true
     axios
         .post('login', {
             username: username.value,
             password: password.value,
         })
         .then(function (response) {
+            loading.value = false
             store.setToken(response.data.token)
             store.setUserId(response.data.user_id)
             console.log('userid: ' + response.data.user_id)
