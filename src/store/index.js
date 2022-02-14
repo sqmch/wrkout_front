@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
             // all these properties will have their type inferred automatically
             token: null,
             user: null,
-            user_id: null
+            user_id: null,
         }
     },
     actions: {
@@ -16,6 +16,23 @@ export const useAuthStore = defineStore('auth', {
         },
         setUserId(user_id) {
             this.user_id = user_id
+        },
+        setToolbarTitle(toolbarTitle) {
+            this.toolbarTitle = toolbarTitle
+        }
+
+    }
+})
+export const useGeneralStore = defineStore('general', {
+    // arrow function recommended for full type inference
+    state: () => {
+        return {
+            toolbarTitle: ""
+        }
+    },
+    actions: {
+        setToolbarTitle(toolbarTitle) {
+            this.toolbarTitle = toolbarTitle
         }
 
     }

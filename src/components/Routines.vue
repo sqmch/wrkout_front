@@ -76,7 +76,6 @@
             </q-card-section>
         </q-card>
     </q-dialog>
-
     <q-dialog v-model="confirmDelete" persistent>
         <q-card>
             <q-card-section class="row items-center justify-center">
@@ -99,20 +98,17 @@
         </q-card>
     </q-dialog>
     <div class="">
-        <div class="row">
-            <q-toolbar>
-                <q-btn flat round icon="arrow_back" @click="goBack"></q-btn
-                ><q-space></q-space>
-                <q-btn
-                    class="text-black"
-                    to="/createroutine"
-                    color="blue-4"
-                    icon="add"
-                    label="create"
-                ></q-btn>
-            </q-toolbar>
+        <!-- <div class="row">
+            <q-space></q-space>
+            <q-btn
+                class="text-black"
+                to="/createroutine"
+                color="blue-4"
+                icon="add"
+                label="create"
+            ></q-btn>
         </div>
-        <q-separator dark></q-separator>
+        <q-separator dark></q-separator>-->
         <q-page-sticky position="bottom-right" :offset="[18, 18]">
             <q-btn
                 fab
@@ -122,7 +118,7 @@
                 class="text-black"
             />
         </q-page-sticky>
-        <div>
+        <div class="routineList">
             <q-expansion-item
                 v-for="routine in routines"
                 v-bind:key="routine"
@@ -173,10 +169,11 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import { useAuthStore } from '../store'
+import { useAuthStore, useGeneralStore } from '../store'
 import router from '../router'
 
 const store = useAuthStore()
+const generalStore = useGeneralStore()
 
 let routines = ref(null)
 let rest_time = ref(90)
@@ -186,6 +183,13 @@ let createDialog = ref(false)
 let confirmDelete = ref(false)
 let editedItem = ref(null)
 let drag = ref(false)
+
+setTitle()
+console.log(generalStore.toolbarTitle)
+
+function setTitle() {
+    generalStore.setToolbarTitle('Routines')
+}
 
 function getRoutines() {
     axios.get(`users/${store.user_id}/routines`).then(function (response) {
@@ -254,4 +258,7 @@ getRoutines()
 <style lang="sass">
 .createRoutineInput
     margin-bottom: 25px
+
+.routineList
+    max-height: 100px
 </style>

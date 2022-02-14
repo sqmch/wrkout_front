@@ -16,8 +16,12 @@
                     class="q-mr-sm"
                 />
                 <q-separator dark vertical inset />
+                <q-btn flat round icon="arrow_back" @click="goBack"></q-btn>
                 <!--<div class="titleText text-subtitle-2 text-blue-4">wrkout</div>-->
-                <q-toolbar-title class="text-subtitle1"></q-toolbar-title>
+
+                <q-toolbar-title class="text-subtitle1">{{
+                    generalStore.toolbarTitle
+                }}</q-toolbar-title>
                 <q-separator dark vertical inset />
 
                 <q-btn round flat icon="logout" @click="logout"></q-btn>
@@ -73,9 +77,10 @@
 <script setup>
 import { ref } from 'vue'
 import imgUrl from '../assets/wrkoutBlueCropped.png'
-import { useAuthStore } from '../store'
+import { useAuthStore, useGeneralStore } from '../store'
 import router from '../router'
 
+const generalStore = useGeneralStore()
 const store = useAuthStore()
 
 let drawer = ref(false)
@@ -84,6 +89,9 @@ let miniState = ref(false)
 function logout() {
     store.token = null
     router.push('/login')
+}
+function goBack() {
+    router.go(-1)
 }
 </script>
 

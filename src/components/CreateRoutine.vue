@@ -93,14 +93,6 @@
         </q-card>
     </q-dialog>
     <div>
-        <div class="row">
-            <q-toolbar>
-                <q-btn flat round icon="arrow_back" @click="goBack"></q-btn>
-                <q-toolbar-title>Create workout routine</q-toolbar-title>
-            </q-toolbar>
-        </div>
-        <q-separator style="margin-bottom: 15px"></q-separator>
-
         <!--  "header-nav" into stepper for clickable steps-->
         <q-stepper
             dark
@@ -297,9 +289,11 @@
 import { ref } from 'vue'
 import router from '../router'
 import axios from 'axios'
-import { useAuthStore } from '../store'
+import { useAuthStore, useGeneralStore } from '../store'
 
 const store = useAuthStore()
+const generalStore = useGeneralStore()
+
 let routines = ref(null)
 let exercises = ref([])
 
@@ -324,6 +318,13 @@ let created_routine_id = ref(null)
 let editExerciseForm = ref(null)
 
 let splitterModel = ref(50)
+
+setTitle()
+console.log(generalStore.toolbarTitle)
+
+function setTitle() {
+    generalStore.setToolbarTitle('Create routine')
+}
 
 function goBack() {
     router.go(-1)
