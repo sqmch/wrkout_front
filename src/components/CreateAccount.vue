@@ -129,7 +129,11 @@ const $q = useQuasar()
 let usernameRules = ref([
     (val) => (val !== null && val !== '') || 'Please enter an username',
     (val) => val.length >= 3 || 'Username must contain at least 3 characters',
+    (val) =>
+        val.match(/^[0-9a-zA-Z]+$/) ||
+        'Special characters not allowed in username',
 ])
+
 let passwordRules = ref([
     (val) => !!val || 'Please enter a password',
     (val) => val.length >= 6 || 'Password must contain at least 6 characters',

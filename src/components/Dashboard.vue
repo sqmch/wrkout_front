@@ -10,7 +10,6 @@ const generalStore = useGeneralStore()
 
 authPlaceholder()
 setTitle()
-console.log(generalStore.toolbarTitle)
 
 function setTitle() {
     generalStore.setToolbarTitle('Dashboard')
