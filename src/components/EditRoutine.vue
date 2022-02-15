@@ -238,11 +238,18 @@
                             <q-card class="bg-grey-10">
                                 <q-card-section>
                                     <div class="row">
-                                        <div class="row">
-                                            {{ exercise.description }}
-                                        </div>
-                                        <div class="row">
+                                        <div class="col">
                                             Rest time: {{ exercise.rest_time }}s
+                                            <div
+                                                v-show="
+                                                    exercise.description
+                                                        .length > 0
+                                                "
+                                                class="col"
+                                            >
+                                                Description:
+                                                {{ exercise.description }}
+                                            </div>
                                         </div>
                                     </div>
                                 </q-card-section>
