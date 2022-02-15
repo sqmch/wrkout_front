@@ -15,7 +15,6 @@ import { check } from 'prettier'
 import { useAuthStore } from '../store'
 
 
-//const store = useAuthStore()
 
 
 const routes = [
@@ -31,7 +30,7 @@ const routes = [
     },
 
     {
-        path: '',
+        path: '/',
         component: Home,
         meta: {
 			requiresAuth: true,
@@ -87,6 +86,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
 
 router.beforeEach((to) => {
     const store = useAuthStore()

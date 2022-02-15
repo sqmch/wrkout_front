@@ -19,6 +19,18 @@ import 'quasar/src/css/index.sass'
 // and placed in same folder as main.js
 import App from './App.vue'
 import router from './router'
+import axios from "axios"
+
+axios.interceptors.response.use(
+	function(response) {
+		return response;
+	},
+	function(error) {
+		//alert("Session expired, please login again.");
+		router.push("/login");
+		return Promise.reject(error);
+	}
+);
 
 const myApp = createApp(App)
 

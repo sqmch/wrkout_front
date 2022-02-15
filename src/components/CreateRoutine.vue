@@ -333,14 +333,21 @@ function closeDialog() {
     editDialog.value = false
 }
 function getRoutines() {
-    axios.get(`users/${store.user_id}/routines`).then(function (response) {
-        routines.value = response.data
-    })
+    axios
+        .get(`users/${store.user_id}/routines`, {
+            headers: { Authorization: 'Bearer ' + store.token },
+        })
+        .then(function (response) {
+            routines.value = response.data
+        })
 }
 function getExercises() {
     axios
         .get(
-            `users/${store.user_id}/routines/${created_routine_id.value}/exercises`
+            `users/${store.user_id}/routines/${created_routine_id.value}/exercises`,
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
+            }
         )
         .then(function (response) {
             exercises.value = response.data
@@ -349,11 +356,17 @@ function getExercises() {
 
 function createRoutine() {
     axios
-        .post(`users/${store.user_id}/routines`, {
-            user_id: store.user_id,
-            title: routine_title.value,
-            description: routine_description.value,
-        })
+        .post(
+            `users/${store.user_id}/routines`,
+            {
+                user_id: store.user_id,
+                title: routine_title.value,
+                description: routine_description.value,
+            },
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
+            }
+        )
         .then(function (response) {
             getRoutines()
             created_routine_id.value = response.data.id
@@ -370,6 +383,9 @@ function createExercise() {
                 title: exercise_title.value,
                 description: exercise_description.value,
                 rest_time: exercise_rest_time.value,
+            },
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
             }
         )
         .then(function (response) {
@@ -394,6 +410,9 @@ function editExercise(exercise) {
                 title: edit_exercise_title.value,
                 description: edit_exercise_description.value,
                 rest_time: edit_exercise_rest_time.value,
+            },
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
             }
         )
         .then(function (response) {
@@ -416,7 +435,10 @@ function confirmDeleteExercise(exercise) {
 function deleteExercise(exercise) {
     axios
         .delete(
-            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`
+            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`,
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
+            }
         )
         .then(function (response) {
             getExercises()

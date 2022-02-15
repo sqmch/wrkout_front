@@ -202,21 +202,31 @@ function setTitle() {
 }
 
 function getRoutines() {
-    axios.get(`users/${store.user_id}/routines`).then(function (response) {
-        routines.value = response.data
-        console.log(response.data)
-    })
+    axios
+        .get(`users/${store.user_id}/routines`, {
+            headers: { Authorization: 'Bearer ' + store.token },
+        })
+        .then(function (response) {
+            routines.value = response.data
+            console.log(response.data)
+        })
 }
 function createRoutineDialog() {
     createDialog.value = true
 }
 function createRoutine() {
     axios
-        .post(`users/${store.user_id}/routines`, {
-            user_id: store.user_id,
-            title: routine_title.value,
-            description: routine_description.value,
-        })
+        .post(
+            `users/${store.user_id}/routines`,
+            {
+                user_id: store.user_id,
+                title: routine_title.value,
+                description: routine_description.value,
+            },
+            {
+                headers: { Authorization: 'Bearer ' + store.token },
+            }
+        )
         .then(function (response) {
             routines.value = response.data
             console.log(response.data)
@@ -234,7 +244,9 @@ function confirmDeleteRoutine(routine) {
 
 function deleteRoutine() {
     axios
-        .delete(`users/${store.user_id}/routines/${editedItem.value.id}`)
+        .delete(`users/${store.user_id}/routines/${editedItem.value.id}`, {
+            headers: { Authorization: 'Bearer ' + store.token },
+        })
         .then(function (response) {
             getRoutines()
         })
