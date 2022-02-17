@@ -166,7 +166,13 @@
                         </div>
 
                         <div class="col">
-                            <q-btn class="fit" flat color="blue-4" size="lg">
+                            <q-btn
+                                disabled
+                                class="fit"
+                                flat
+                                color="blue-4"
+                                size="lg"
+                            >
                                 <q-icon name="play_arrow"></q-icon>
                             </q-btn>
                         </div>
