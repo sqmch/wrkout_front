@@ -93,21 +93,14 @@ import { useAuthStore, useGeneralStore } from '../store'
 const generalStore = useGeneralStore()
 const authStore = useAuthStore()
 
-let editedItem = ref(null)
 let confirmDelete = ref(false)
 
 function confirmDeleteRoutine(routine) {
     confirmDelete.value = true
-    editedItem.value = routine
+    generalStore.deleteID = routine.id
 }
 function deleteRoutine() {
-    axios
-        .delete(`users/${authStore.user_id}/routines/${editedItem.value.id}`, {
-            headers: { Authorization: 'Bearer ' + authStore.token },
-        })
-        .then(function (response) {
-            generalStore.getRoutines()
-        })
+    generalStore.deleteRoutine(generalStore.deleteID)
 }
 function editRoutine(routine) {
     router.push({
@@ -115,8 +108,7 @@ function editRoutine(routine) {
         params: { routine: JSON.stringify(routine) },
     })
 }
-
 onMounted(() => {
-    generalStore.getRoutines()
+    generalStore.fetchRoutines()
 })
 </script>

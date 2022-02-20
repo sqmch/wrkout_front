@@ -4,7 +4,7 @@ import Login from '/src/components/Login.vue'
 import CreateAccount from '/src/components/CreateAccount.vue'
 import Routines from '/src/components/Routines.vue'
 import Dashboard from '/src/components/Dashboard.vue'
-import CreateRoutine from '/src/components/CreateRoutine.vue'
+import CreateRoutineOG from '/src/components/CreateRoutineOG.vue'
 import Stats from '/src/components/Stats.vue'
 import EditRoutine from '/src/components/EditRoutine.vue'
 
@@ -55,7 +55,7 @@ const routes = [
         {
             path: '/createroutine',
             name: 'CreateRoutine',
-            component: CreateRoutine,
+            component: CreateRoutineOG,
             meta: {
 			    requiresAuth: true,
             },

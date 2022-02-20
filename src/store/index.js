@@ -26,7 +26,16 @@ export const useGeneralStore = defineStore('general', {
         return {
             toolbarTitle: "",
             routines: [],
+            exercises: [],
+            deleteID: null
         }
+    },
+    getters: {
+        getRoutines() {
+
+            return this.routines
+
+        },
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
@@ -35,7 +44,7 @@ export const useGeneralStore = defineStore('general', {
         setRoutines(routines) {
             this.routines = routines
         },
-        getRoutines() {
+        fetchRoutines() {
             const authStore = useAuthStore()
             axios
                 .get(`users/${authStore.user_id}/routines`, {
@@ -45,6 +54,31 @@ export const useGeneralStore = defineStore('general', {
                     this.routines = response.data
                 })
 
+        },
+        getExercises(routine_id) {
+            const authStore = useAuthStore()
+            axios
+                .get(
+                    `users/${authStore.user_id}/routines/${routine_id}/exercises`,
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then((response) => {
+                    this.exercises = response.data
+                })
+        },
+        deleteRoutine(routine_id) {
+            const authStore = useAuthStore()
+
+            axios
+                .delete(`users/${authStore.user_id}/routines/${routine_id}`, {
+                    headers: { Authorization: 'Bearer ' + authStore.token },
+                })
+                .then((response) => {
+                    this.fetchRoutines()
+
+                })
         }
 
 
