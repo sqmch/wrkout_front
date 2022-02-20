@@ -76,7 +76,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgUrl from '../assets/wrkoutBlueCropped.png'
 import { useAuthStore, useGeneralStore } from '../store'
 import router from '../router'
 

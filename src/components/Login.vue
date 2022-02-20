@@ -23,6 +23,7 @@
                             </div>
                             <div class="row justify-center">
                                 <q-input
+                                    autocomplete="on"
                                     type="text"
                                     class="loginInput"
                                     filled
@@ -34,6 +35,7 @@
                             </div>
                             <div class="row justify-center">
                                 <q-input
+                                    autocomplete="on"
                                     filled
                                     :type="isPwd ? 'password' : 'text'"
                                     class="loginInput"
