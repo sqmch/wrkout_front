@@ -327,11 +327,7 @@ let editExerciseForm = ref(null)
 let splitterModel = ref(50)
 
 getExercises()
-setTitle()
-
-function setTitle() {
-    generalStore.setToolbarTitle('Edit routine')
-}
+generalStore.setToolbarTitle('Edit routine')
 
 function goBack() {
     router.go(-1)

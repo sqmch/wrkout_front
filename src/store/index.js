@@ -25,7 +25,7 @@ export const useGeneralStore = defineStore('general', {
     state: () => {
         return {
             toolbarTitle: "",
-            routines: []
+            routines: [],
         }
     },
     actions: {
