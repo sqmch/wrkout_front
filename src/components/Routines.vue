@@ -202,6 +202,7 @@ let editedItem = ref(null)
 let drag = ref(false)
 
 setTitle()
+getRoutines()
 
 function setTitle() {
     generalStore.setToolbarTitle('Routines')
@@ -278,8 +279,6 @@ function onReset() {
     routine_description.value = null
     rest_time.value = 90
 }
-
-getRoutines()
 </script>
 <style lang="sass">
 .createRoutineInput

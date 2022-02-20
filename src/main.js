@@ -26,7 +26,6 @@ axios.interceptors.response.use(
 		return response;
 	},
 	function(error) {
-		//alert("Session expired, please login again.");
 		router.push("/login");
 		return Promise.reject(error);
 	}
@@ -39,5 +38,4 @@ myApp.use(Quasar, {
   iconSet: quasarIconSet,
 }).use(router).use(createPinia())
 
-// Assumes you have a <div id="app"></div> in your index.html
 myApp.mount('#app')

@@ -2,10 +2,8 @@ import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
 export const useAuthStore = defineStore('auth', {
-    // arrow function recommended for full type inference
     state: () => {
         return {
-            // all these properties will have their type inferred automatically
             token: useStorage('token', null),
             user: null,
             user_id: null,
@@ -25,7 +23,6 @@ export const useAuthStore = defineStore('auth', {
     }
 })
 export const useGeneralStore = defineStore('general', {
-    // arrow function recommended for full type inference
     state: () => {
         return {
             toolbarTitle: ""
