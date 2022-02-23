@@ -40,6 +40,9 @@ export const useGeneralStore = defineStore('general', {
         }
     },
     getters: {
+        exercisesSortedByID: (state) => state.exercises.sort((a, b) => (a.id > b.id ? 1 : -1)),
+        routinesSortedByID: (state) => state.routines.sort((a, b) => (a.id > b.id ? 1 : -1))
+
     },
     actions: {
         setToolbarTitle(toolbarTitle) {

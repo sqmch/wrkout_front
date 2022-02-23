@@ -34,7 +34,7 @@
             >
         </q-card>
         <q-expansion-item
-            v-for="routine in generalStore.routines"
+            v-for="routine in generalStore.routinesSortedByID"
             v-bind:key="routine"
             switch-toggle-side
             icon=""
@@ -87,7 +87,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import router from '../router'
-
 import { useAuthStore, useGeneralStore } from '../store'
 
 const generalStore = useGeneralStore()
@@ -116,3 +115,7 @@ onMounted(() => {
     generalStore.getRoutines()
 })
 </script>
+<style lang="sass">
+.emptyRoutineList
+    margin-top: 5vh
+</style>

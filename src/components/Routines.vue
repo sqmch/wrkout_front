@@ -21,9 +21,3 @@ const generalStore = useGeneralStore()
 generalStore.setToolbarTitle('Routines')
 </script>
 
-<style lang="sass">
-.createRoutineInput
-    margin-bottom: 25px
-.emptyRoutineList
-    margin-top: 5vh
-</style>

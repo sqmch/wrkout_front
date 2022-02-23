@@ -8,7 +8,7 @@
         <q-list
             dense
             padding
-            v-for="exercise in generalStore.exercises"
+            v-for="exercise in generalStore.exercisesSortedByID"
             v-bind:key="exercise"
         >
             <q-dialog v-model="confirmDelete" persistent>
@@ -124,15 +124,7 @@ const generalStore = useGeneralStore()
 
 let editDialog = ref(false)
 let confirmDelete = ref(false)
-let exercise_title = ref('')
-let exercise_description = ref('')
-let exercise_rest_time = ref(90)
-
-let edit_exercise_title = ref('')
-let edit_exercise_description = ref('')
-let edit_exercise_rest_time = ref(90)
 let editedItem = ref(null)
-let exercises = ref([])
 
 function closeDialog() {
     editDialog.value = false
@@ -154,7 +146,6 @@ function onExerciseEditSubmit(exercise) {
 }
 
 function confirmDeleteExercise(exercise) {
-    console.log('exercise from confirmDeleteExercise: ', exercise)
     confirmDelete.value = true
     generalStore.editedRoutineID = exercise.owner_id
     generalStore.editedExerciseID = exercise.id

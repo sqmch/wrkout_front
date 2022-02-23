@@ -80,11 +80,9 @@ let parsedRoutine = ref(JSON.parse(props.routine))
 let routine_id = ref(parsedRoutine._value.id)
 
 let step = ref(1)
-
 let confirmDelete = ref(false)
 
 function editRoutine() {
-    console.log('parsedRoutine.value.id from EditRoutine: ', routine_id.value)
     generalStore.editRoutine(routine_id.value)
     step.value = 2
     generalStore.formTitle = ''

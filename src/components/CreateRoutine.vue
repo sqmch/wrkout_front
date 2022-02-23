@@ -78,12 +78,10 @@ const store = useAuthStore()
 const generalStore = useGeneralStore()
 
 let step = ref(1)
-
 let confirmDelete = ref(false)
 
 function createRoutine() {
     generalStore.createRoutine()
-
     step.value = 2
     generalStore.formTitle = ''
     generalStore.formDescription = ''
