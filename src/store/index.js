@@ -27,24 +27,28 @@ export const useGeneralStore = defineStore('general', {
             toolbarTitle: "",
             routines: [],
             exercises: [],
-            deleteID: null
+            editedRoutineID: null,
+            editedExerciseID: null,
+            formTitle: "",
+            formDescription: "",
+            formRestTime: 90,
+            exerciseFormTitle: "",
+            exerciseFormDescription: "",
+            exerciseFormRestTime: "",
+            createdRoutineID: null,
+            step: 1
         }
     },
     getters: {
-        getRoutines() {
-
-            return this.routines
-
-        },
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
             this.toolbarTitle = toolbarTitle
         },
-        setRoutines(routines) {
-            this.routines = routines
-        },
-        fetchRoutines() {
+        ////////////////
+        // ROUTINES
+        ////////////////
+        getRoutines() {
             const authStore = useAuthStore()
             axios
                 .get(`users/${authStore.user_id}/routines`, {
@@ -55,6 +59,65 @@ export const useGeneralStore = defineStore('general', {
                 })
 
         },
+        createRoutine() {
+            const authStore = useAuthStore()
+            axios
+                .post(
+                    `users/${authStore.user_id}/routines`,
+                    {
+                        user_id: authStore.user_id,
+                        title: this.formTitle,
+                        description: this.formDescription
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then( (response) => {
+                    this.getRoutines()
+                    this.formTitle = ''
+                    this.formDescription = ''
+                    this.createdRoutineID = response.data.id
+                    this.getExercises(this.createdRoutineID)
+                })
+        },
+        editRoutine(routine_id) {
+            const authStore = useAuthStore()
+            console.log("routine_id from editRoutine in store: ", routine_id);
+            axios
+                .put(
+                    `users/${authStore.user_id}/routines/${routine_id}`,
+                    {
+                        user_id: authStore.user_id,
+                        title: this.formTitle,
+                        description: this.formDescription
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then((response) => {
+                    this.getRoutines()
+                    this.getExercises(routine_id)
+                    this.formTitle = ""
+                    this.formDescription = ""
+                })
+        },
+        deleteRoutine(routine_id) {
+            const authStore = useAuthStore()
+
+            axios
+                .delete(`users/${authStore.user_id}/routines/${routine_id}`, {
+                    headers: { Authorization: 'Bearer ' + authStore.token },
+                })
+                .then((response) => {
+                    this.getRoutines()
+
+                })
+        },
+        ////////////////
+        // EXERCISES
+        ////////////////
         getExercises(routine_id) {
             const authStore = useAuthStore()
             axios
@@ -68,16 +131,62 @@ export const useGeneralStore = defineStore('general', {
                     this.exercises = response.data
                 })
         },
-        deleteRoutine(routine_id) {
+        createExercise(routine_id) {
             const authStore = useAuthStore()
 
             axios
-                .delete(`users/${authStore.user_id}/routines/${routine_id}`, {
-                    headers: { Authorization: 'Bearer ' + authStore.token },
-                })
+                .post(
+                    `users/${authStore.user_id}/routines/${routine_id}/exercises`,
+                    {
+                        owner_id:  routine_id,
+                        title: this.formTitle,
+                        description: this.formDescription,
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
                 .then((response) => {
-                    this.fetchRoutines()
+                    this.getExercises(routine_id)
+                    this.formTitle = ""
+                    this.formDescription = ""
+                })
+        },
 
+        editExercise() {
+            const authStore = useAuthStore()
+
+            axios
+                .put(
+                    `users/${authStore.user_id}/routines/${this.editedRoutineID}/exercises/${this.editedExerciseID}`,
+                    {
+                        title: this.formTitle,
+                        description: this.formDescription,
+                        rest_time: this.formRestTime,
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then((response) => {
+                    this.getExercises(this.editedRoutineID)
+
+                    this.formTitle = ''
+                    this.formDescription = ''
+                    this.formRestTime = 90
+                })
+        },
+        deleteExercise() {
+            const authStore = useAuthStore()
+            axios
+                .delete(
+                    `users/${authStore.user_id}/routines/${this.editedRoutineID}/exercises/${this.editedExerciseID}`,
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then((response) => {
+                    this.getExercises(this.editedRoutineID)
                 })
         }
 

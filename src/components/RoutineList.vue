@@ -20,6 +20,7 @@
             </q-card-actions>
         </q-card>
     </q-dialog>
+
     <div class="routineList">
         <q-card
             flat
@@ -85,7 +86,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 import router from '../router'
 
 import { useAuthStore, useGeneralStore } from '../store'
@@ -103,12 +103,16 @@ function deleteRoutine() {
     generalStore.deleteRoutine(generalStore.deleteID)
 }
 function editRoutine(routine) {
+    generalStore.formTitle = routine.title
+    generalStore.formDescription = routine.description
+    generalStore.formRestTime = routine.rest_time
     router.push({
         name: 'EditRoutine',
         params: { routine: JSON.stringify(routine) },
     })
 }
+
 onMounted(() => {
-    generalStore.fetchRoutines()
+    generalStore.getRoutines()
 })
 </script>

@@ -93,8 +93,8 @@
         </q-card>
     </q-dialog>
     <div>
-        <!--  "header-nav" into stepper for clickable steps-->
         <q-stepper
+            header-nav
             dark
             v-model="step"
             vertical
@@ -104,7 +104,7 @@
         >
             <q-step
                 :name="1"
-                title="Routine details"
+                title="Edit routine details"
                 icon="settings"
                 :done="step > 1"
             >
@@ -115,7 +115,7 @@
                     class="q-gutter-md"
                 >
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
                         v-model="routine_title"
                         label="Routine name *"
@@ -128,15 +128,16 @@
                         ]"
                     />
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
+                        type="textarea"
                         v-model="routine_description"
                         label="Routine description (optional)"
                         hint="Description of your workout routine"
                     />
 
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
                         color="grey-2"
                         type="number"
@@ -154,7 +155,7 @@
                     <q-stepper-navigation>
                         <q-btn
                             class="text-grey-9 text-bold fit"
-                            label="Create routine"
+                            label="Edit routine"
                             type="submit"
                             color="blue-4"
                     /></q-stepper-navigation>
@@ -163,8 +164,8 @@
 
             <q-step
                 :name="2"
-                title="Add exercises"
-                icon="create_new_folder"
+                title="Edit exercises"
+                icon="list"
                 :done="step > 2"
             >
                 <q-form
@@ -173,7 +174,7 @@
                     class="q-gutter-md q-pb-sm"
                 >
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
                         v-model="exercise_title"
                         label="Exercise name *"
@@ -186,7 +187,7 @@
                         ]"
                     />
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
                         v-model="exercise_description"
                         label="Exercise description (optional)"
@@ -194,7 +195,7 @@
                     />
 
                     <q-input
-                        class="createRoutineInput"
+                        class="editRoutineInput"
                         filled
                         color="grey-2"
                         type="number"
@@ -294,12 +295,16 @@ import { useAuthStore, useGeneralStore } from '../store'
 const store = useAuthStore()
 const generalStore = useGeneralStore()
 
+const props = defineProps({
+    routine: String,
+})
+let parsedRoutine = ref(JSON.parse(props.routine))
 let routines = ref(null)
 let exercises = ref([])
 
 let rest_time = ref(90)
-let routine_title = ref('')
-let routine_description = ref('')
+let routine_title = ref(parsedRoutine._value.title)
+let routine_description = ref(parsedRoutine._value.description)
 let exercise_title = ref('')
 let exercise_description = ref('')
 let exercise_rest_time = ref(90)
@@ -309,6 +314,8 @@ let edit_exercise_description = ref('')
 let edit_exercise_rest_time = ref(90)
 
 let editDialog = ref(false)
+
+let createDialog = ref(false)
 let confirmDelete = ref(false)
 let editedItem = ref(null)
 let step = ref(1)
@@ -319,14 +326,15 @@ let editExerciseForm = ref(null)
 
 let splitterModel = ref(50)
 
-generalStore.setToolbarTitle('Create routine')
+getExercises()
+generalStore.setToolbarTitle('Edit routine')
 
 function goBack() {
     router.go(-1)
 }
 
 function closeDialog() {
-    editDialog.value = false
+    createDialog.value = false
 }
 function getRoutines() {
     axios
@@ -340,7 +348,7 @@ function getRoutines() {
 function getExercises() {
     axios
         .get(
-            `users/${store.user_id}/routines/${created_routine_id.value}/exercises`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`,
             {
                 headers: { Authorization: 'Bearer ' + store.token },
             }
@@ -350,10 +358,10 @@ function getExercises() {
         })
 }
 
-function createRoutine() {
+function editRoutine() {
     axios
-        .post(
-            `users/${store.user_id}/routines`,
+        .put(
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}`,
             {
                 user_id: store.user_id,
                 title: routine_title.value,
@@ -365,7 +373,7 @@ function createRoutine() {
         )
         .then(function (response) {
             getRoutines()
-            created_routine_id.value = response.data.id
+            getExercises()
             routine_title.value = ''
             routine_description.value = ''
         })
@@ -373,12 +381,11 @@ function createRoutine() {
 function createExercise() {
     axios
         .post(
-            `users/${store.user_id}/routines/${created_routine_id.value}/exercises`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises`,
             {
                 owner_id: created_routine_id.value,
                 title: exercise_title.value,
                 description: exercise_description.value,
-                rest_time: exercise_rest_time.value,
             },
             {
                 headers: { Authorization: 'Bearer ' + store.token },
@@ -388,7 +395,6 @@ function createExercise() {
             getExercises()
             exercise_title.value = ''
             exercise_description.value = ''
-            exercise_rest_time.value = 90
         })
 }
 function editExerciseDialog(exercise) {
@@ -401,7 +407,7 @@ function editExerciseDialog(exercise) {
 function editExercise(exercise) {
     axios
         .put(
-            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`,
             {
                 title: edit_exercise_title.value,
                 description: edit_exercise_description.value,
@@ -431,7 +437,7 @@ function confirmDeleteExercise(exercise) {
 function deleteExercise(exercise) {
     axios
         .delete(
-            `users/${store.user_id}/routines/${editedItem.value.owner_id}/exercises/${editedItem.value.id}`,
+            `users/${store.user_id}/routines/${parsedRoutine.value.id}/exercises/${editedItem.value.id}`,
             {
                 headers: { Authorization: 'Bearer ' + store.token },
             }
@@ -442,12 +448,12 @@ function deleteExercise(exercise) {
 }
 function onSubmit() {
     createForm.value.validate()
-    createRoutine()
+    editRoutine()
     step.value = 2
 }
 function onExerciseSubmit() {
     createExerciseForm.value.validate()
-    genrealStore.createExercise()
+    createExercise()
 }
 
 function onReset() {
