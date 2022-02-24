@@ -69,11 +69,12 @@
 
                     <div class="col">
                         <q-btn
-                            disabled
+                            to="performroutine"
                             class="fit"
                             flat
                             color="blue-4"
                             size="lg"
+                            @click="performRoutine(routine)"
                         >
                             <q-icon name="play_arrow"></q-icon>
                         </q-btn>
@@ -111,6 +112,11 @@ function editRoutine(routine) {
     })*/
     generalStore.currentRoutine = routine
     router.push('/editroutine')
+}
+function performRoutine(routine) {
+    generalStore.exercises = routine.exercises
+    generalStore.activeRestTime = routine.rest_time
+    console.log(generalStore.exercises)
 }
 
 onMounted(() => {

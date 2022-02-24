@@ -7,6 +7,10 @@ import Dashboard from '/src/components/Dashboard.vue'
 import CreateRoutine from '/src/components/CreateRoutine.vue'
 import Stats from '/src/components/Stats.vue'
 import EditRoutine from '/src/components/EditRoutine.vue'
+import PerformRoutine from '/src/components/PerformRoutine.vue'
+import RoutineComplete from '/src/components/RoutineComplete.vue'
+
+
 import { check } from 'prettier'
 import { useAuthStore } from '../store'
 
@@ -56,18 +60,36 @@ const routes = [
             props: true
 
         },
-         {
+        {
             path: '/stats',
             name: 'Stats',
             component: Stats,
             meta: {
-			    requiresAuth: true,
-		    },
+                requiresAuth: true,
             },
-         {
+        },
+        {
             path: '/editroutine',
             name: 'EditRoutine',
             component: EditRoutine,
+            meta: {
+			    requiresAuth: true,
+             },
+            props: true
+        },
+        {
+            path: '/performroutine',
+            name: 'PerformRoutine',
+            component: PerformRoutine,
+            meta: {
+			    requiresAuth: true,
+             },
+            props: true
+            },
+         {
+            path: '/complete',
+            name: 'RoutineComplete',
+            component: RoutineComplete,
             meta: {
 			    requiresAuth: true,
              },

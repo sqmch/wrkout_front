@@ -26,6 +26,7 @@ export const useGeneralStore = defineStore('general', {
         return {
             toolbarTitle: "",
             currentRoutine: null,
+            performedExerciseID: 0,
             routines: [],
             exercises: [],
             editedRoutineID: null,
@@ -37,13 +38,16 @@ export const useGeneralStore = defineStore('general', {
             exerciseFormDescription: "",
             exerciseFormRestTime: "",
             createdRoutineID: null,
-            step: 1
+            step: 1,
+            reps: null,
+            totalRestTime: null,
+            activeRestTime: null,
+            resting: false,
         }
     },
     getters: {
         exercisesSortedByID: (state) => state.exercises.sort((a, b) => (a.id > b.id ? 1 : -1)),
-        routinesSortedByID: (state) => state.routines.sort((a, b) => (a.id > b.id ? 1 : -1))
-
+        routinesSortedByID: (state) => state.routines.sort((a, b) => (a.id > b.id ? 1 : -1)),
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
@@ -71,7 +75,8 @@ export const useGeneralStore = defineStore('general', {
                     {
                         user_id: authStore.user_id,
                         title: this.formTitle,
-                        description: this.formDescription
+                        description: this.formDescription,
+                        rest_time: this.formRestTime
                     },
                     {
                         headers: { Authorization: 'Bearer ' + authStore.token },
@@ -81,6 +86,7 @@ export const useGeneralStore = defineStore('general', {
                     this.getRoutines()
                     this.formTitle = ''
                     this.formDescription = ''
+                    this.formRestTime = 90
                     this.createdRoutineID = response.data.id
                     this.getExercises(this.createdRoutineID)
                 })
@@ -94,7 +100,8 @@ export const useGeneralStore = defineStore('general', {
                     {
                         user_id: authStore.user_id,
                         title: this.formTitle,
-                        description: this.formDescription
+                        description: this.formDescription,
+                        rest_time: this.formRestTime
                     },
                     {
                         headers: { Authorization: 'Bearer ' + authStore.token },
@@ -105,6 +112,7 @@ export const useGeneralStore = defineStore('general', {
                     this.getExercises(routine_id)
                     this.formTitle = ""
                     this.formDescription = ""
+                    this.formRestTime = 90
                 })
         },
         deleteRoutine(routine_id) {
@@ -145,6 +153,7 @@ export const useGeneralStore = defineStore('general', {
                         owner_id:  routine_id,
                         title: this.formTitle,
                         description: this.formDescription,
+                        rest_time: this.formRestTime
                     },
                     {
                         headers: { Authorization: 'Bearer ' + authStore.token },
@@ -153,7 +162,8 @@ export const useGeneralStore = defineStore('general', {
                 .then((response) => {
                     this.getExercises(routine_id)
                     this.formTitle = ""
-                    this.formDescription = ""
+                    this.formDescription = "",
+                        this.formRestTime = 90
                 })
         },
 
