@@ -64,6 +64,10 @@ export const useGeneralStore = defineStore('general', {
                 })
                 .then((response) => {
                     this.routines = response.data
+                    this.resting = false
+                    this.activeRestTime = null
+                    this.totalRestTime = null
+                    this.reps = null
                 })
 
         },

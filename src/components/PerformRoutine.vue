@@ -52,9 +52,9 @@
                 v-show="generalStore.resting"
                 :max="generalStore.totalRestTime"
                 show-value
-                class="text-light-blue q-ma-md"
+                class="text-light-blue q-ma-xl"
                 :value="generalStore.activeRestTime"
-                size="100px"
+                size="200px"
                 color="light-blue"
             />
         </div>
