@@ -73,28 +73,23 @@ import ExerciseList from './ExerciseList.vue'
 
 const store = useAuthStore()
 const generalStore = useGeneralStore()
-const props = defineProps({
-    routine: String,
-})
-let parsedRoutine = ref(JSON.parse(props.routine))
-let routine_id = ref(parsedRoutine._value.id)
 
 let step = ref(1)
 let confirmDelete = ref(false)
 
 function editRoutine() {
-    generalStore.editRoutine(routine_id.value)
+    generalStore.editRoutine(generalStore.currentRoutine.id)
     step.value = 2
     generalStore.formTitle = ''
     generalStore.formDescription = ''
 }
 function createExercise() {
-    generalStore.createExercise(routine_id.value)
+    generalStore.createExercise(generalStore.currentRoutine.id)
     generalStore.formTitle = ''
     generalStore.formDescription = ''
 }
 
 onMounted(() => {
-    generalStore.getExercises(parsedRoutine.value.id)
+    generalStore.getExercises(generalStore.currentRoutine.id)
 })
 </script>

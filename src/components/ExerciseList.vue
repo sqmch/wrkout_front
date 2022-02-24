@@ -156,5 +156,8 @@ function deleteExercise() {
 function onExerciseSubmit() {
     createExerciseForm.value.validate()
     generalStore.createExercise()
+    generalStore.formTitle = ''
+    generalStore.formDescription = ''
+    generalStore.formRestTime = 90
 }
 </script>

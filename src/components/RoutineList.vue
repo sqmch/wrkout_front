@@ -105,10 +105,12 @@ function editRoutine(routine) {
     generalStore.formTitle = routine.title
     generalStore.formDescription = routine.description
     generalStore.formRestTime = routine.rest_time
-    router.push({
+    /*router.push({
         name: 'EditRoutine',
         params: { routine: JSON.stringify(routine) },
-    })
+    })*/
+    generalStore.currentRoutine = routine
+    router.push('/editroutine')
 }
 
 onMounted(() => {

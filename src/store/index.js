@@ -25,6 +25,7 @@ export const useGeneralStore = defineStore('general', {
     state: () => {
         return {
             toolbarTitle: "",
+            currentRoutine: null,
             routines: [],
             exercises: [],
             editedRoutineID: null,
