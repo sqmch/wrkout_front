@@ -15,18 +15,16 @@ q.dark.set(true)
     </q-layout>
 </template>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+<style lang="sass">
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap')
 
-.app {
-    font-family: 'Montserrat', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    margin-top: 0px;
-}
+.app
+    font-family: 'Montserrat', sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    text-align: center
+    margin-top: 0px
 
-body.body--dark {
-    background: #1d1d1d;
-}
+body.body--dark
+    background: #1d1d1d
 </style>

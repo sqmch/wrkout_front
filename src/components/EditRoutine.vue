@@ -77,6 +77,8 @@ const generalStore = useGeneralStore()
 let step = ref(1)
 let confirmDelete = ref(false)
 
+generalStore.setToolbarTitle('Edit routine')
+
 function editRoutine() {
     generalStore.editRoutine(generalStore.currentRoutine.id)
     step.value = 2

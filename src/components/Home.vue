@@ -7,24 +7,23 @@
     >
         <q-header>
             <q-toolbar class="toolBar">
+                <q-btn @click="drawer = !drawer" flat round dense icon="menu" />
+                <!-- <q-separator dark vertical inset />-->
                 <q-btn
-                    @click="drawer = !drawer"
+                    class="q-ma-md"
                     flat
                     round
                     dense
-                    icon="menu"
-                    class="q-mr-sm"
-                />
-                <q-separator dark vertical inset />
-                <q-btn flat round icon="arrow_back" @click="goBack"></q-btn>
-                <!--<div class="titleText text-subtitle-2 text-blue-4">wrkout</div>-->
+                    icon="arrow_back"
+                    @click="goBack"
+                ></q-btn>
 
-                <q-toolbar-title class="text-subtitle1">{{
-                    generalStore.toolbarTitle
-                }}</q-toolbar-title>
-                <q-separator dark vertical inset />
+                <div class="text-subtitle1">
+                    {{ generalStore.toolbarTitle }}
+                </div>
+                <!-- <q-separator dark vertical inset />
 
-                <q-btn round flat icon="logout" @click="logout"></q-btn>
+                <q-btn round flat icon="logout" @click="logout"></q-btn>-->
             </q-toolbar>
         </q-header>
 
@@ -62,14 +61,19 @@
 
                         <q-item-section> Stats </q-item-section>
                     </q-item>
+                    <q-item clickable v-ripple @click="logout">
+                        <q-item-section avatar>
+                            <q-icon name="logout" />
+                        </q-item-section>
+
+                        <q-item-section> Logout </q-item-section>
+                    </q-item>
                 </q-list>
             </q-scroll-area>
         </q-drawer>
 
         <q-page-container>
-            <q-page class="q-pa-md">
-                <router-view></router-view>
-            </q-page>
+            <router-view></router-view>
         </q-page-container>
     </q-layout>
 </template>
@@ -80,13 +84,13 @@ import { useAuthStore, useGeneralStore } from '../store'
 import router from '../router'
 
 const generalStore = useGeneralStore()
-const store = useAuthStore()
+const authStore = useAuthStore()
 
 let drawer = ref(false)
 let miniState = ref(false)
 
 function logout() {
-    store.token = null
+    authStore.token = null
     router.push('/login')
 }
 function goBack() {
@@ -98,7 +102,4 @@ function goBack() {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;300&family=Montserrat:wght@300&display=swap')
 .toolBar
     background-color: #1d1d1d
-
-.titleText
-    font-family: 'Montserrat Alternates', sans-serif
 </style>

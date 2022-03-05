@@ -65,7 +65,7 @@
                                     type="submit"
                                     class="loginButton text-black text-bold"
                                     size="md"
-                                    color="blue-4"
+                                    color="primary"
                                     label="Login"
                                 />
                             </div>
@@ -91,7 +91,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgUrl from '../assets/wrkoutBlue.png'
+import imgUrl from '../assets/wrkout (8).png'
 import axios from 'axios'
 import router from '../router'
 import { useAuthStore } from '../store'

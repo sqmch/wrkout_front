@@ -42,7 +42,7 @@
                     class="text-grey-9 text-bold fit"
                     label="Submit"
                     type="submit"
-                    color="blue-4"
+                    color="primary"
                 />
             </q-stepper-navigation>
         </q-form>

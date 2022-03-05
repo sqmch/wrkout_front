@@ -35,7 +35,21 @@ const myApp = createApp(App)
 
 myApp.use(Quasar, {
   plugins: {Notify}, // import Quasar plugins and add here
-  iconSet: quasarIconSet,
+	iconSet: quasarIconSet,
+    config: {
+    brand: {
+      primary: '#00C896',
+      secondary: '#518071',
+      accent: '#C8FCEA',
+
+      dark: '#1d1d1d',
+
+      positive: '#21BA45',
+      negative: '#C10015',
+      info: '#31CCEC',
+      warning: '#F2C037'
+    }
+  }
 }).use(router).use(createPinia())
 
 myApp.mount('#app')

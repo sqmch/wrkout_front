@@ -48,6 +48,8 @@ export const useGeneralStore = defineStore('general', {
     getters: {
         exercisesSortedByID: (state) => state.exercises.sort((a, b) => (a.id > b.id ? 1 : -1)),
         routinesSortedByID: (state) => state.routines.sort((a, b) => (a.id > b.id ? 1 : -1)),
+        normalizedProgress: (state) => 1-(state.exercises.length - state.performedExerciseID - 0) /
+        (state.exercises.length - 0)
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
@@ -68,6 +70,8 @@ export const useGeneralStore = defineStore('general', {
                     this.activeRestTime = null
                     this.totalRestTime = null
                     this.reps = null
+                    this.performedExerciseID = 0
+
                 })
 
         },

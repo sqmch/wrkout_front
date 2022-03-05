@@ -86,7 +86,7 @@
                                     type="submit"
                                     class="loginButton text-black text-bold"
                                     size="md"
-                                    color="blue-4"
+                                    color="primary"
                                     label="Create account"
                                 />
                             </div>

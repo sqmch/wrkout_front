@@ -80,6 +80,8 @@ const generalStore = useGeneralStore()
 let step = ref(1)
 let confirmDelete = ref(false)
 
+generalStore.setToolbarTitle('Create routine')
+
 function createRoutine() {
     generalStore.createRoutine()
     step.value = 2

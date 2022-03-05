@@ -72,7 +72,7 @@
                             to="performroutine"
                             class="fit"
                             flat
-                            color="blue-4"
+                            color="primary"
                             size="lg"
                             @click="performRoutine(routine)"
                         >

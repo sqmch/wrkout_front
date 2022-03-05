@@ -5,7 +5,7 @@
                 fab
                 to="/createroutine"
                 icon="add"
-                color="blue-4"
+                color="primary"
                 class="text-black"
             />
         </q-page-sticky>
