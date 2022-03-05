@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col" style="margin-top: 50px; margin-bottom: 50px">
+                <div class="col" style="margin-top: 20px; margin-bottom: 20px">
                     <div
                         v-show="!generalStore.resting"
                         style="margin-top: 30px"
@@ -98,7 +98,7 @@
                 size="200px"
                 color="primary"
             />
-            <div class="q-pa-md">
+            <div class="restForm" v-show="!generalStore.resting">
                 <LineChart
                     ref="lineRef"
                     height="75px"
@@ -145,7 +145,19 @@ let options = {
         },
         title: {
             display: true,
-            text: '',
+            text: 'Reps in previous workouts',
+        },
+    },
+    scales: {
+        x: {
+            grid: {
+                display: false,
+            },
+        },
+        y: {
+            grid: {
+                display: false,
+            },
         },
     },
 }
