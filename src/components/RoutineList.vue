@@ -114,9 +114,10 @@ function editRoutine(routine) {
     router.push('/editroutine')
 }
 function performRoutine(routine) {
+    generalStore.performedRoutineTitle = routine.title
     generalStore.exercises = routine.exercises
     generalStore.activeRestTime = routine.rest_time
-    console.log(generalStore.exercises)
+    generalStore.createPerformedRoutine()
 }
 
 onMounted(() => {

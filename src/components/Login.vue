@@ -139,6 +139,7 @@ function login() {
             router.push('/routines')
         })
         .catch(function (error) {
+            loading.value = false
             console.log(error)
             $q.notify({
                 type: 'negative',

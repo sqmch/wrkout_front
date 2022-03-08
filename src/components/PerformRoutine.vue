@@ -167,13 +167,25 @@ if (!generalStore.exercises) {
 function onSubmit() {
     form.value.validate()
     if (generalStore.exercises.length - 1 > generalStore.performedExerciseID) {
+        generalStore.performedExercise =
+            generalStore.exercises[generalStore.performedExerciseID]
+        generalStore.createPerformedExercise(generalStore.performedRoutineID)
         generalStore.performedExerciseID += 1
         generalStore.reps = null
         generalStore.totalRestTime =
             generalStore.exercises[generalStore.performedExerciseID].rest_time
         generalStore.activeRestTime = generalStore.totalRestTime
-        console.log(generalStore.performedExerciseID)
         countDownTimer()
+    } else if (
+        generalStore.exercises.length - 1 ===
+        generalStore.performedExerciseID
+    ) {
+        generalStore.performedExercise =
+            generalStore.exercises[generalStore.performedExerciseID]
+        generalStore.createPerformedExercise(generalStore.performedRoutineID)
+        generalStore.reps = null
+        generalStore.performedExerciseID = 0
+        router.push('/complete')
     } else {
         generalStore.performedExerciseID = 0
         router.push('/complete')

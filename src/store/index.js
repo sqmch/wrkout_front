@@ -43,6 +43,8 @@ export const useGeneralStore = defineStore('general', {
             totalRestTime: null,
             activeRestTime: null,
             resting: false,
+            performedRoutineTitle: null,
+            performedExercise: null
         }
     },
     getters: {
@@ -209,6 +211,40 @@ export const useGeneralStore = defineStore('general', {
                 )
                 .then((response) => {
                     this.getExercises(this.editedRoutineID)
+                })
+        },
+        createPerformedRoutine() {console.log(this.performedRoutineTitle);
+            const authStore = useAuthStore()
+            axios
+                .post(
+                    `users/${authStore.user_id}/performed_routines`,
+                    {
+                        user_id: authStore.user_id,
+                        title: this.performedRoutineTitle,
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then((response) => {
+                    this.performedRoutineID = response.data.id
+                })
+        },
+        createPerformedExercise() {
+            const authStore = useAuthStore()
+            axios
+                .post(
+                    `users/${authStore.user_id}/performed_routines/${this.performedRoutineID}/performed_exercises`,
+                    {
+                        user_id: authStore.user_id,
+                        title: this.performedExercise.title,
+                        reps: this.reps
+                    },
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    }
+                )
+                .then( (response) => {
                 })
         }
 
