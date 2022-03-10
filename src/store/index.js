@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import axios from 'axios'
+import router from '../router'
+
 
 
 export const useAuthStore = defineStore('auth', {
@@ -44,14 +46,26 @@ export const useGeneralStore = defineStore('general', {
             activeRestTime: null,
             resting: false,
             performedRoutineTitle: null,
-            performedExercise: null
+            performedExercise: null,
+            currentPerformedRoutines: null,
+            repsHistoryList: [1,2,3,4],
+            repsLabelList: [1, 2, 3, 4],
         }
     },
     getters: {
         exercisesSortedByID: (state) => state.exercises.sort((a, b) => (a.id > b.id ? 1 : -1)),
         routinesSortedByID: (state) => state.routines.sort((a, b) => (a.id > b.id ? 1 : -1)),
         normalizedProgress: (state) => 1-(state.exercises.length - state.performedExerciseID - 0) /
-        (state.exercises.length - 0)
+            (state.exercises.length - 0),
+        repData: (state) => ({
+                labels: state.repsLabelList.slice(1).slice(-5),
+                datasets: [
+                    {
+                        data: state.repsHistoryList.slice(1).slice(-5),
+                        backgroundColor: ['#00C896'],
+                    },
+    ],
+            })
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
@@ -213,7 +227,7 @@ export const useGeneralStore = defineStore('general', {
                     this.getExercises(this.editedRoutineID)
                 })
         },
-        createPerformedRoutine() {console.log(this.performedRoutineTitle);
+        createPerformedRoutine() {
             const authStore = useAuthStore()
             axios
                 .post(
@@ -244,8 +258,83 @@ export const useGeneralStore = defineStore('general', {
                         headers: { Authorization: 'Bearer ' + authStore.token },
                     }
                 )
-                .then( (response) => {
+                .then((response) => {
+
                 })
+        },
+        getPerformedRoutines() {
+            const authStore = useAuthStore()
+             axios
+                .get(`users/${authStore.user_id}/performed_routines/${this.performedRoutineTitle}`,
+                    {
+                        headers: { Authorization: 'Bearer ' + authStore.token },
+                    })
+                .then((response) => {
+                    this.currentPerformedRoutines = response.data
+                    this.repsHistoryList = []
+                    this.repsLabelList = []
+                    for (var routine in this.currentPerformedRoutines) {
+                        if ( this.currentPerformedRoutines[routine].performed_exercises.length > 0)
+                        {
+                            for (var exercise in this.currentPerformedRoutines[routine].performed_exercises)
+                            {
+                                if (this.currentPerformedRoutines[routine].performed_exercises[exercise].title ===
+                                    this.performedExercise.title)
+                                {
+                                    this.repsHistoryList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].reps)
+                                    this.repsLabelList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].title)
+
+                                }
+
+                            }
+                        } else {
+                            console.log("no exercises");
+                        }
+
+                    }
+                })
+        },
+        countDownTimer() {
+            if (this.activeRestTime > 0) {
+                this.resting = true
+                setTimeout(() => {
+                    this.activeRestTime -= 1
+                    this.countDownTimer()
+                    if (this.activeRestTime === 0) {
+                        this.activeRestTime = this.totalRestTime
+                        this.resting = false
+                    }
+                }, 1000)
+            }
+        },
+        nextExercise() {
+            if (this.exercises.length - 1 > this.performedExerciseID) {
+                this.createPerformedExercise(this.performedRoutineID)
+                this.performedExerciseID += 1
+                this.performedExercise =
+                    this.exercises[this.performedExerciseID]
+                this.getPerformedRoutines()
+                this.reps = null
+                this.totalRestTime =
+                    this.exercises[this.performedExerciseID].rest_time
+                this.activeRestTime = this.totalRestTime
+                this.countDownTimer()
+            } else if (
+                this.exercises.length - 1 ===
+                this.performedExerciseID
+            ) {
+
+                this.createPerformedExercise(this.performedRoutineID)
+                this.performedExercise =
+                this.exercises[this.performedExerciseID]
+                this.getPerformedRoutines()
+                this.reps = null
+                this.performedExerciseID = 0
+                router.push('/complete')
+            } else {
+                this.performedExerciseID = 0
+                router.push('/complete')
+            }
         }
 
 

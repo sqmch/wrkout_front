@@ -115,9 +115,12 @@ function editRoutine(routine) {
 }
 function performRoutine(routine) {
     generalStore.performedRoutineTitle = routine.title
+    generalStore.getPerformedRoutines()
     generalStore.exercises = routine.exercises
     generalStore.activeRestTime = routine.rest_time
     generalStore.createPerformedRoutine()
+    generalStore.performedExercise =
+        generalStore.exercises[generalStore.performedExerciseID]
 }
 
 onMounted(() => {

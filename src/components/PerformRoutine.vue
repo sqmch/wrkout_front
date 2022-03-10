@@ -103,7 +103,7 @@
                     ref="lineRef"
                     height="75px"
                     :options="options"
-                    :chartData="testData"
+                    :chartData="generalStore.repData"
                 />
             </div>
         </div>
@@ -113,7 +113,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import router from '../router'
 import { useAuthStore, useGeneralStore } from '../store'
 import { defineComponent } from 'vue'
@@ -126,18 +126,9 @@ const authStore = useAuthStore()
 
 generalStore.setToolbarTitle('')
 
-let form = ref(null)
-let testData = {
-    labels: ['01/03/22', '02/03/22', '03/03/22', '04/03/22', '06/03/22'],
-    datasets: [
-        {
-            data: [5, 4, 7, 7, 8],
-            backgroundColor: ['#00C896'],
-        },
-    ],
-}
+let form = ref([])
 
-let options = {
+let options = ref({
     responsive: true,
     plugins: {
         legend: {
@@ -160,51 +151,19 @@ let options = {
             },
         },
     },
-}
+})
 if (!generalStore.exercises) {
     router.push('/routines')
 }
+
 function onSubmit() {
     form.value.validate()
-    if (generalStore.exercises.length - 1 > generalStore.performedExerciseID) {
-        generalStore.performedExercise =
-            generalStore.exercises[generalStore.performedExerciseID]
-        generalStore.createPerformedExercise(generalStore.performedRoutineID)
-        generalStore.performedExerciseID += 1
-        generalStore.reps = null
-        generalStore.totalRestTime =
-            generalStore.exercises[generalStore.performedExerciseID].rest_time
-        generalStore.activeRestTime = generalStore.totalRestTime
-        countDownTimer()
-    } else if (
-        generalStore.exercises.length - 1 ===
-        generalStore.performedExerciseID
-    ) {
-        generalStore.performedExercise =
-            generalStore.exercises[generalStore.performedExerciseID]
-        generalStore.createPerformedExercise(generalStore.performedRoutineID)
-        generalStore.reps = null
-        generalStore.performedExerciseID = 0
-        router.push('/complete')
-    } else {
-        generalStore.performedExerciseID = 0
-        router.push('/complete')
-    }
+    generalStore.nextExercise()
 }
-function countDownTimer() {
-    if (generalStore.activeRestTime > 0) {
-        generalStore.resting = true
 
-        setTimeout(() => {
-            generalStore.activeRestTime -= 1
-            countDownTimer()
-            if (generalStore.activeRestTime === 0) {
-                generalStore.activeRestTime = generalStore.totalRestTime
-                generalStore.resting = false
-            }
-        }, 1000)
-    }
-}
+onMounted(() => {
+    generalStore.getPerformedRoutines()
+})
 </script>
 
 <style lang="sass">

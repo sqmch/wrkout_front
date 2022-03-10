@@ -112,7 +112,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import imgUrl from '../assets/wrkoutBlue.png'
+import imgUrl from '../assets/wrkout (8).png'
 import axios from 'axios'
 import router from '../router'
 import { useQuasar } from 'quasar'

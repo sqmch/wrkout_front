@@ -28,7 +28,7 @@ const routes = [
     },
 
     {
-        path: '',
+        path: '/',
         component: Home,
         meta: {
 			requiresAuth: true,
@@ -82,7 +82,7 @@ const routes = [
             name: 'PerformRoutine',
             component: PerformRoutine,
             meta: {
-			    requiresAuth: true,
+                requiresAuth: true,
              },
             props: true
             },
