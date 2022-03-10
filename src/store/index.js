@@ -63,6 +63,10 @@ export const useGeneralStore = defineStore('general', {
                     {
                         data: state.repsHistoryList.slice(1).slice(-5),
                         backgroundColor: ['#00C896'],
+                        borderColor: ['#00C896'],
+                        pointHitRadius: 75,
+                        pointBorderWidth: 10
+
                     },
     ],
             })
