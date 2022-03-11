@@ -48,8 +48,8 @@ export const useGeneralStore = defineStore('general', {
             performedRoutineTitle: null,
             performedExercise: null,
             currentPerformedRoutines: null,
-            repsHistoryList: [1,2,3,4],
-            repsLabelList: [1, 2, 3, 4],
+            repsHistoryList: [],
+            repsLabelList: [],
         }
     },
     getters: {
@@ -61,11 +61,15 @@ export const useGeneralStore = defineStore('general', {
                 labels: state.repsLabelList.slice(1).slice(-5),
                 datasets: [
                     {
+                        label: " " + state.performedExercise.title,
                         data: state.repsHistoryList.slice(1).slice(-5),
                         backgroundColor: ['#00C896'],
                         borderColor: ['#00C896'],
-                        pointHitRadius: 75,
-                        pointBorderWidth: 10
+                        pointHitRadius: 50,
+                        pointRadius: 5,
+                        pointBorderWidth: 5,
+                        pointHoverBorderWidth: 5,
+                        pointHoverRadius: 10
 
                     },
     ],
@@ -286,7 +290,7 @@ export const useGeneralStore = defineStore('general', {
                                     this.performedExercise.title)
                                 {
                                     this.repsHistoryList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].reps)
-                                    this.repsLabelList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].title)
+                                    this.repsLabelList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].date.slice(0,10))
 
                                 }
 
