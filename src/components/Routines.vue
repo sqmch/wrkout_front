@@ -7,6 +7,7 @@
                 icon="add"
                 color="primary"
                 class="text-black"
+                style="margin-bottom: 3em"
             />
         </q-page-sticky>
         <routine-list></routine-list>

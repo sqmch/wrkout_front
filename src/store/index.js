@@ -38,7 +38,6 @@ export const useGeneralStore = defineStore('general', {
             formRestTime: 90,
             exerciseFormTitle: "",
             exerciseFormDescription: "",
-            exerciseFormRestTime: "",
             createdRoutineID: null,
             step: 1,
             reps: null,
