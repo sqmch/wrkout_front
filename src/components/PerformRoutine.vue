@@ -45,7 +45,7 @@
                         class=""
                     >
                         <div class="text-center text-subtitle">
-                            Current exercise:
+                            Current exercise
                         </div>
                     </div>
                     <div
@@ -53,7 +53,7 @@
                         style="margin-top: 30px"
                         class="text-center text-subtitle"
                     >
-                        Next exercise:
+                        Next exercise
                     </div>
                     <div
                         style="margin-top: 10px"
@@ -78,13 +78,13 @@
                     v-model="generalStore.reps"
                     style="width: 100%; margin-top: 30px"
                     outlined
-                    label="Reps completed"
+                    label="Enter amount of reps completed"
                 ></q-input>
                 <q-btn
                     :disabled="!generalStore.reps"
                     style="width: 100%; margin-top: 30px; margin-bottom: 30px"
-                    class="text-black"
-                    label="next"
+                    class="text-black text-bold"
+                    label="rest"
                     type="submit"
                     color="primary"
                 ></q-btn
@@ -99,6 +99,14 @@
                 color="primary"
             />
             <div class="restForm" v-show="!generalStore.resting">
+                <div class="">
+                    <div
+                        class="text-center text-subtitle"
+                        style="margin-top: 10px; margin-bottom: 15px"
+                    >
+                        Reps in previous workouts
+                    </div>
+                </div>
                 <LineChart
                     ref="lineRef"
                     height="75px"
@@ -135,7 +143,7 @@ let options = ref({
             display: false,
         },
         title: {
-            display: true,
+            display: false,
             text: 'Reps in previous workouts',
         },
     },
@@ -148,6 +156,10 @@ let options = ref({
         y: {
             grid: {
                 display: false,
+            },
+            ticks: {
+                precision: 0,
+                beginAtZero: true,
             },
         },
     },
@@ -169,7 +181,7 @@ onMounted(() => {
 <style lang="sass">
 .exercisesLeftRow
     background-color: #518071
-    padding: 1em
+    padding: 0.5em
 .exercisesLeftText
     color: #1d1d1d
 .restForm

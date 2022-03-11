@@ -50,6 +50,7 @@ export const useGeneralStore = defineStore('general', {
             currentPerformedRoutines: null,
             repsHistoryList: [],
             repsLabelList: [],
+            processedDate: null
         }
     },
     getters: {
@@ -58,11 +59,11 @@ export const useGeneralStore = defineStore('general', {
         normalizedProgress: (state) => 1-(state.exercises.length - state.performedExerciseID - 0) /
             (state.exercises.length - 0),
         repData: (state) => ({
-                labels: state.repsLabelList.slice(1).slice(-5),
+                labels: state.repsLabelList.slice(-5),
                 datasets: [
                     {
                         label: " " + state.performedExercise.title,
-                        data: state.repsHistoryList.slice(1).slice(-5),
+                        data: state.repsHistoryList.slice(-5),
                         backgroundColor: ['#00C896'],
                         borderColor: ['#00C896'],
                         pointHitRadius: 50,
@@ -290,7 +291,9 @@ export const useGeneralStore = defineStore('general', {
                                     this.performedExercise.title)
                                 {
                                     this.repsHistoryList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].reps)
-                                    this.repsLabelList.push(this.currentPerformedRoutines[routine].performed_exercises[exercise].date.slice(0,10))
+                                    this.processedDate = this.currentPerformedRoutines[routine].performed_exercises[exercise].date.slice(0, 10)
+                                    this.processedDate = this.processedDate.slice(-2) + "-" + this.processedDate.slice(-5, -3) + "-" +  this.processedDate.slice(2, 4)
+                                    this.repsLabelList.push(this.processedDate)
 
                                 }
 
@@ -300,6 +303,9 @@ export const useGeneralStore = defineStore('general', {
                         }
 
                     }
+                    console.log(this.repsHistoryList);
+                    console.log(this.repsLabelList);
+
                 })
         },
         countDownTimer() {
