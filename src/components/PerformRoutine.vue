@@ -107,11 +107,14 @@
                         Reps in previous workouts
                     </div>
                 </div>
-                <LineChart
-                    ref="lineRef"
-                    :options="options"
-                    :chartData="generalStore.repData"
-                />
+                <div>
+                    <LineChart
+                        style="height: 30vh"
+                        ref="lineRef"
+                        :options="options"
+                        :chartData="generalStore.repData"
+                    />
+                </div>
             </div>
         </div>
 
@@ -137,7 +140,7 @@ let form = ref([])
 
 let options = ref({
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     aspectRatio: 2,
     plugins: {
         legend: {

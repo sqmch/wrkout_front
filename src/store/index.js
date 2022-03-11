@@ -73,8 +73,8 @@ export const useGeneralStore = defineStore('general', {
                         pointHoverRadius: 10
 
                     },
-    ],
-            })
+                ],
+            }),
     },
     actions: {
         setToolbarTitle(toolbarTitle) {
