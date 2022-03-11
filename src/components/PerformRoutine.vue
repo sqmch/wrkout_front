@@ -109,7 +109,6 @@
                 </div>
                 <LineChart
                     ref="lineRef"
-                    height="75px"
                     :options="options"
                     :chartData="generalStore.repData"
                 />
@@ -138,6 +137,8 @@ let form = ref([])
 
 let options = ref({
     responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
     plugins: {
         legend: {
             display: false,
