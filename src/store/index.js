@@ -126,7 +126,6 @@ export const useGeneralStore = defineStore('general', {
         },
         editRoutine(routine_id) {
             const authStore = useAuthStore()
-            console.log("routine_id from editRoutine in store: ", routine_id);
             axios
                 .put(
                     `users/${authStore.user_id}/routines/${routine_id}`,
@@ -297,13 +296,9 @@ export const useGeneralStore = defineStore('general', {
 
                             }
                         } else {
-                            console.log("no exercises");
+                            console.log("no exercises, skipping");
                         }
-
                     }
-                    console.log(this.repsHistoryList);
-                    console.log(this.repsLabelList);
-
                 })
         },
         countDownTimer() {
