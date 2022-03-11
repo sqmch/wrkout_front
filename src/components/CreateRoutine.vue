@@ -42,7 +42,6 @@
                     descriptionLabel="Routine description (optional)"
                     titleHint="Name of your workout routine"
                     descriptionHint="Description of your workout routine"
-                    restTimeHint="Rest time between exercises in seconds"
                     @submit="createRoutine"
                 />
             </q-step>
@@ -60,7 +59,7 @@
                     descriptionLabel="Description (optional)"
                     titleHint="Name of the exercise"
                     descriptionHint="Description of the exercise"
-                    restTimeHint="Rest time after exercise"
+                    restTimeHint="Rest time after exercise (seconds)"
                     @submit="createExercise"
                 />
                 <exercise-list></exercise-list>

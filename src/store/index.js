@@ -195,8 +195,7 @@ export const useGeneralStore = defineStore('general', {
                 .then((response) => {
                     this.getExercises(routine_id)
                     this.formTitle = ""
-                    this.formDescription = "",
-                        this.formRestTime = 90
+                    this.formDescription = ""
                 })
         },
 
@@ -220,7 +219,6 @@ export const useGeneralStore = defineStore('general', {
 
                     this.formTitle = ''
                     this.formDescription = ''
-                    this.formRestTime = 90
                 })
         },
         deleteExercise() {
@@ -344,10 +342,10 @@ export const useGeneralStore = defineStore('general', {
                 this.getPerformedRoutines()
                 this.reps = null
                 this.performedExerciseID = 0
-                router.push('/complete')
+                router.push('/routines')
             } else {
                 this.performedExerciseID = 0
-                router.push('/complete')
+                router.push('/routines')
             }
         }
 

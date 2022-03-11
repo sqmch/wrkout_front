@@ -1,11 +1,6 @@
 <template>
     <div>
-        <q-form
-            ref="form"
-            @submit="onSubmit"
-            @reset="onReset"
-            class="q-gutter-md"
-        >
+        <q-form ref="form" @submit="onSubmit" class="q-gutter-md">
             <q-input
                 filled
                 v-model="generalStore.formTitle"
@@ -16,14 +11,15 @@
                     (val) => (val && val.length > 0) || 'Please enter a name',
                 ]"
             />
-            <q-input
+            <!-- <q-input
                 filled
                 v-model="generalStore.formDescription"
                 :label="descriptionLabel"
                 :hint="descriptionHint"
-            />
+            />-->
 
             <q-input
+                v-show="restTimeHint"
                 filled
                 color="grey-2"
                 type="number"
@@ -50,7 +46,6 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
 import { useAuthStore, useGeneralStore } from '../store'
 
 const props = defineProps({
@@ -72,10 +67,5 @@ let form = ref(null)
 function onSubmit() {
     form.value.validate()
     emit('submit')
-}
-function onReset() {
-    generalStore.formTitle = ''
-    generalStore.formDescription = ''
-    generalStore.formRestTime = 90
 }
 </script>

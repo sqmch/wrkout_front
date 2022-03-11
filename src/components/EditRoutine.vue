@@ -40,7 +40,6 @@
                     descriptionLabel="Routine description (optional)"
                     titleHint="Name of your workout routine"
                     descriptionHint="Description of your workout routine"
-                    restTimeHint="Rest time between exercises in seconds"
                     @submit="editRoutine"
                 />
             </q-step>
