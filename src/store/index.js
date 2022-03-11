@@ -49,7 +49,8 @@ export const useGeneralStore = defineStore('general', {
             currentPerformedRoutines: null,
             repsHistoryList: [],
             repsLabelList: [],
-            processedDate: null
+            processedDate: null,
+            repsChartDataSliceSize: -10
         }
     },
     getters: {
@@ -58,11 +59,11 @@ export const useGeneralStore = defineStore('general', {
         normalizedProgress: (state) => 1-(state.exercises.length - state.performedExerciseID - 0) /
             (state.exercises.length - 0),
         repData: (state) => ({
-                labels: state.repsLabelList.slice(-5),
+                labels: state.repsLabelList.slice(state.repsChartDataSliceSize),
                 datasets: [
                     {
                         label: " " + state.performedExercise.title,
-                        data: state.repsHistoryList.slice(-5),
+                        data: state.repsHistoryList.slice(state.repsChartDataSliceSize),
                         backgroundColor: ['#00C896'],
                         borderColor: ['#00C896'],
                         pointHitRadius: 50,
