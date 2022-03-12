@@ -123,7 +123,9 @@ function performRoutine(routine) {
         generalStore.exercises[generalStore.performedExerciseID]
 }
 
-generalStore.getRoutines()
+onMounted(() => {
+    generalStore.getRoutines()
+})
 </script>
 <style lang="sass">
 .emptyRoutineList

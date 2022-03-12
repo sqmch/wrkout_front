@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore, useGeneralStore } from '../store'
 import router from '../router'
 
