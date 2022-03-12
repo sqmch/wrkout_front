@@ -96,6 +96,9 @@ function logout() {
 function goBack() {
     router.go(-1)
 }
+onMounted(() => {
+    generalStore.getRoutines()
+})
 </script>
 
 <style lang="sass" scoped>
@@ -103,3 +106,5 @@ function goBack() {
 .toolBar
     background-color: #1d1d1d
 </style>
+
+
