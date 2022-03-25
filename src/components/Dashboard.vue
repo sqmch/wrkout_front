@@ -1,5 +1,13 @@
 <template>
-    <div>dashboard.vue - WIP</div>
+    <div class="row">
+    <div class="col-md-2 col-xs-0"></div>
+    <div class="col-md-8 col-xs-0">
+        <div class="text-h5">Welcome back, {{store.user}}</div>
+
+    </div>
+    <div class="col-md-2 col-xs-0"></div>
+
+    </div>
 </template>
 <script setup>
 import { useAuthStore, useGeneralStore } from '../store'

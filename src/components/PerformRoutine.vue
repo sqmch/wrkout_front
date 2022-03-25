@@ -7,7 +7,7 @@
                 class="q-mt-md"
             />
             <div class="row exercisesLeftRow items-center">
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                     <div class="row">
                         <div
                             class="
