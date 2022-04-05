@@ -19,7 +19,7 @@
                             style=""
                         >
                             {{
-                                generalStore.exercises.length -
+                                generalStore.exercisesSortedByID.length -
                                 generalStore.performedExerciseID
                             }}
                         </div>
@@ -60,7 +60,7 @@
                         class="text-center text-h4 text-primary"
                     >
                         {{
-                            generalStore.exercises[
+                            generalStore.exercisesSortedByID[
                                 generalStore.performedExerciseID
                             ].title
                         }}
