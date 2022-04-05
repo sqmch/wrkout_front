@@ -20,6 +20,9 @@ export const useAuthStore = defineStore('auth', {
         setUserId(user_id) {
             this.user_id = user_id
         },
+        setUserName(username) {
+            this.user = username
+        }
 
     }
 })

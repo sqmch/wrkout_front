@@ -136,6 +136,7 @@ function login() {
             loading.value = false
             store.setToken(response.data.token)
             store.setUserId(response.data.user_id)
+            store.setUserName(username.value)
             router.push('/routines')
         })
         .catch(function (error) {
